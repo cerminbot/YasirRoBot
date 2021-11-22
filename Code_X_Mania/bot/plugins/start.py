@@ -65,11 +65,11 @@ Klik /help untuk melihat info lengkapnya.\n
         elif get_msg.audio:
             file_name = f"{get_msg.audio.file_name}"
 
-        stream_link = Var.URL + 'watch/' + str(log_msg.message_id)
+        stream_link = Var.URL + 'tonton/' + str(log_msg.message_id)
         shortlink = get_shortlink(stream_link)
         if shortlink:
             stream_link = shortlink
-        online_link = Var.URL + 'download/' + str(log_msg.message_id)
+        online_link = Var.URL + 'unduh/' + str(log_msg.message_id)
         shortlinka = get_shortlink(online_link)
         if shortlinka:
             online_link = shortlinka
