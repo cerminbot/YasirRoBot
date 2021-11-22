@@ -31,11 +31,11 @@ async def private_receive_handler(c: Client, m: Message):
         )
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
-        stream_link = Var.URL + 'watch/' + str(log_msg.message_id)
+        stream_link = Var.URL + 'tonton/' + str(log_msg.message_id)
         shortlink = get_shortlink(stream_link) 
         if shortlink:
             stream_link = shortlink
-        online_link = Var.URL + 'download/'+ str(log_msg.message_id) 
+        online_link = Var.URL + 'unduh/'+ str(log_msg.message_id) 
         shortlinka = get_shortlink(online_link)
         if shortlinka:
             online_link = shortlinka
@@ -87,8 +87,8 @@ async def channel_receive_handler(bot, broadcast):
         return
     try:
         log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
-        stream_link = Var.URL + 'watch/' + str(log_msg.message_id) 
-        online_link = Var.URL + 'download/' + str(log_msg.message_id) 
+        stream_link = Var.URL + 'tonton/' + str(log_msg.message_id) 
+        online_link = Var.URL + 'unduh/' + str(log_msg.message_id) 
         await log_msg.reply_text(
             text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
             quote=True,
