@@ -47,7 +47,7 @@ Klik /help untuk melihat info lengkapnya.\n
             disable_web_page_preview=True
         )
     else:
-        log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
+        get_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
 
         file_size = None
         if get_msg.video:
@@ -65,11 +65,11 @@ Klik /help untuk melihat info lengkapnya.\n
         elif get_msg.audio:
             file_name = f"{get_msg.audio.file_name}"
 
-        stream_link = Var.URL + 'tonton/' + str(log_msg.message_id)
+        stream_link = Var.URL + 'tonton/' + str(get_msg.message_id)
         #shortlink = get_shortlink(stream_link)
         #if shortlink:
             #stream_link = shortlink
-        online_link = Var.URL + 'unduh/' + str(log_msg.message_id)
+        online_link = Var.URL + 'unduh/' + str(get_msg.message_id)
         #shortlinka = get_shortlink(online_link)
         #if shortlinka:
             #online_link = shortlinka
