@@ -78,9 +78,9 @@ Klik /help untuk melihat info lengkapnya.\n
 <u>Yeaaayyyy! 😁, Link kamu berhasil di generate! 🤓</u>
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
-<b>📥 Download Video :</b> {}
-<b>🖥 Tonton Video nya  :</b> {}
-<b>🚸 Catatan :</b> Link tidak akan expired, kecuali saya hapus jika kamu menyalahgunakan bot ini.
+<b>📥 Download Video :</b> <code>{}</code>
+<b>🖥 Tonton Video nya  :</b> <code>{}</code>
+<b>🚸 Catatan :</b> Link tidak akan expired, kecuali saya yang hapus jika kamu menyalahgunakan bot ini.
 <i>© @YasirRoBot </i>"""
 
         await m.reply_text(
