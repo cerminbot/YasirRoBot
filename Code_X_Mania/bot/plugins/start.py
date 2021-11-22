@@ -13,7 +13,7 @@ from pyshorteners import Shortener
 def get_shortlink(url):
    shortlink = False 
    try:
-      shortlink = Shortener().dagd.short(url)
+      shortlink = Shortener().tinyurl.short(url)
    except Exception as err:
        print(err)
        pass
@@ -32,10 +32,10 @@ async def start(b, m):
         await m.reply_text(
             text="""
 👋 Hai, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
-Kirimkan aku sebuah file atau video dan lihat keajaiban yang terjadi!\n
+Kirimkan aku sebuah file atau video dan lihat keajaiban yang terjadi!
 Klik /help untuk melihat info lengkapnya.\n
-<b>🍃 Bot dibuat oleh :</b>@YasirArisM\n\n
-<b><u>PERINGATAN 🚸</u></b>\n
+<b>🍃 Bot dibuat oleh :</b>@YasirArisM
+<b><u>PERINGATAN 🚸</u></b>
 <b>Jangan Spam bot!!!.</b>""",
             parse_mode="HTML",
             disable_web_page_preview=True,
@@ -66,13 +66,13 @@ Klik /help untuk melihat info lengkapnya.\n
             file_name = f"{get_msg.audio.file_name}"
 
         stream_link = Var.URL + 'tonton/' + str(log_msg.message_id)
-        shortlink = get_shortlink(stream_link)
-        if shortlink:
-            stream_link = shortlink
+        #shortlink = get_shortlink(stream_link)
+        #if shortlink:
+            #stream_link = shortlink
         online_link = Var.URL + 'unduh/' + str(log_msg.message_id)
-        shortlinka = get_shortlink(online_link)
-        if shortlinka:
-            online_link = shortlinka
+        #shortlinka = get_shortlink(online_link)
+        #if shortlinka:
+            #online_link = shortlinka
 
         msg_text ="""
 <u>Yeaaayyyy! 😁, Link kamu berhasil di generate! 🤓</u>
