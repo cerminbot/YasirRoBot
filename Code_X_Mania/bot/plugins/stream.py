@@ -71,7 +71,7 @@ async def private_receive_handler(c: Client, m: Message):
             parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('💰 Donate', url='https://t.me/YasirRoBot?start=donate')],[InlineKeyboardButton("🖥 Streaming Link", url=stream_link), #Stream Link
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Streaming Link", url=stream_link), #Stream Link
                                                 InlineKeyboardButton('📥 Download Link', url=online_link)], #Download Link
                                               [InlineKeyboardButton('💰 Donate', url='https://t.me/YasirRoBot?start=donate')]])
         )
