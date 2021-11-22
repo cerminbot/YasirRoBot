@@ -47,7 +47,7 @@ Klik /help untuk melihat info lengkapnya.\n
             disable_web_page_preview=True
         )
     else:
-        get_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
+        log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
 
         file_size = None
         if get_msg.video:
