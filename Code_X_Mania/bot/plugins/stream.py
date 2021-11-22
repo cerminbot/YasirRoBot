@@ -58,21 +58,22 @@ async def private_receive_handler(c: Client, m: Message):
 
         msg_text ="""
 <i><u>Yeayy! 😁, Link mu sudah digenerate! 🤓</u></i>
-<b>📂 Nama File :</b> <i>{}</i>
-<b>📦 Ukuran File :</b> <i>{}</i>
+<b>📂 Nama File :</b> <code>{}</code>
+<b>📦 Ukuran File :</b> <code>{}</code>
 <b>📥 Download File :</b> <i>{}</i>
 <b>🖥 Tonton Video Nya    :</b> <i>{}</i>
-<b>🚸 CATATAN : Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
+<b>CATATAN : Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
 © @YasirRoBot"""
 
-        await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Dᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
+        await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
         await m.reply_text(
             text=msg_text.format(file_name, file_size, online_link, stream_link),
             parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Streaming Link", url=stream_link), #Stream Link
-                                                InlineKeyboardButton('📥 Download Link', url=online_link)]]) #Download Link
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('💰 Donate', url='https://t.me/YasirRoBot?start=donate')],[InlineKeyboardButton("🖥 Streaming Link", url=stream_link), #Stream Link
+                                                InlineKeyboardButton('📥 Download Link', url=online_link)], #Download Link
+                                              [InlineKeyboardButton('💰 Donate', url='https://t.me/YasirRoBot?start=donate')]])
         )
     except FloodWait as e:
         print(f"Sleeping for {str(e.x)}s")
@@ -99,8 +100,10 @@ async def channel_receive_handler(bot, broadcast):
             message_id=broadcast.message_id,
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton("🖥 Streaming Link ", url=stream_link),
-                     InlineKeyboardButton('📥 Download Link', url=online_link)] 
+                   [InlineKeyboardButton("🖥 Streaming Link ", url=stream_link),
+                     InlineKeyboardButton('📥 Download Link', url=online_link)],
+                   [InlineKeyboardButton('💰 Donate', url='https://t.me/YasirRoBot?start=donate'),
+                     InlineKeyboardButton('🎬 Subtitles', url='https://yasirsub.cf')]
                 ]
             )
         )
