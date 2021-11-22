@@ -34,7 +34,7 @@ async def start(b, m):
 👋 Hai, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
 Kirimkan aku sebuah file atau video dan lihat keajaiban yang terjadi!\n
 Klik /help untuk melihat info lengkapnya.\n
-<b>🍃 Bᴏᴛ Made Bʏ :</b>@CodeXMania\n\n
+<b>🍃 Bot dibuat oleh :</b>@YasirArisM\n\n
 <b><u>PERINGATAN 🚸</u></b>\n
 <b>Jangan Spam bot!!!.</b>""",
             parse_mode="HTML",
