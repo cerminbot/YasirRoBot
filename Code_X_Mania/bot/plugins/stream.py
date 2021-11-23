@@ -1,5 +1,6 @@
 # (c) Code-X-Mania
 
+import requests
 import asyncio
 from Code_X_Mania.bot import StreamBot
 from Code_X_Mania.utils.database import Database
@@ -89,7 +90,15 @@ async def channel_receive_handler(bot, broadcast):
     try:
         log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
         stream_link = Var.URL + 'tonton/' + str(log_msg.message_id) 
-        online_link = Var.URL + 'unduh/' + str(log_msg.message_id) 
+        req1 = requests.get(f"https://cararegistrasi.com/full?api=eaeb04c8be8226da4f3ee809c18bf1cee128c7f4&url={stream_link}")
+        history1 = req1.history[2].url
+        short1 = history1.split("/")[5]
+        stream_ads = f"https://cararegistrasi.com/{short1}"
+        online_link = Var.URL + 'unduh/' + str(log_msg.message_id)
+        req2 = requests.get(f"https://cararegistrasi.com/full?api=eaeb04c8be8226da4f3ee809c18bf1cee128c7f4&url={online_link}")
+        history2 = req2.history[2].url
+        short2 = history2.split("/")[5]
+        online_ads = f"https://cararegistrasi.com/{short2}"
         await log_msg.reply_text(
             text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
             quote=True,
@@ -100,10 +109,8 @@ async def channel_receive_handler(bot, broadcast):
             message_id=broadcast.message_id,
             reply_markup=InlineKeyboardMarkup(
                 [
-                   [InlineKeyboardButton("🖥 Streaming Link ", url=stream_link),
-                     InlineKeyboardButton('📥 Download Link', url=online_link)],
-                   [InlineKeyboardButton('💰 Donate', url='https://t.me/YasirRoBot?start=donate'),
-                     InlineKeyboardButton('🎬 Subtitles', url='https://yasirsub.cf')]
+                   [InlineKeyboardButton("🖥 Stream Link ", url=stream_ads),
+                     InlineKeyboardButton('📥 Download Link', url=online_ads)]
                 ]
             )
         )
