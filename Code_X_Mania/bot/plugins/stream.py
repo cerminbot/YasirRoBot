@@ -61,14 +61,13 @@ async def private_receive_handler(c: Client, m: Message):
 <i><u>Yeayy! 😁, Link mu sudah digenerate! 🤓</u></i>
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
-<b>📥 Download File :</b> <i>{}</i>
-<b>🖥 Tonton Video Nya    :</b> <i>{}</i>
+
 <b>CATATAN : Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
 © @YasirRoBot"""
 
         await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
         await m.reply_text(
-            text=msg_text.format(file_name, file_size, online_link, stream_link),
+            text=msg_text.format(file_name, file_size),
             parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
