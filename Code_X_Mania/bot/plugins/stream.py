@@ -108,8 +108,8 @@ async def channel_receive_handler(bot, broadcast):
             message_id=broadcast.message_id,
             reply_markup=InlineKeyboardMarkup(
                 [
-                   [InlineKeyboardButton("🖥 Stream Link ", url=stream_ads),
-                     InlineKeyboardButton('📥 Download Link', url=online_ads)]
+                   [InlineKeyboardButton("🖥 Stream Link ", url=stream_link),
+                     InlineKeyboardButton('📥 Download Link', url=online_link)]
                 ]
             )
         )
