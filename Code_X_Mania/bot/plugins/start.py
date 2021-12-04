@@ -41,7 +41,7 @@ Klik /help untuk melihat info lengkapnya.\n
             parse_mode="HTML",
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup( [ [InlineKeyboardButton('Owner', url=f"https://t.me/{Var.OWNER_USERNAME}"),
-                                                                                       InlineKeyboardButton('Gabung Channel ', url='https://t.me/YasirPediaChannel') ] ]  ) )
+                                                                                       InlineKeyboardButton('YMovieZNew Channel', url='https://t.me/YMovieZNew') ] ]  ) )
     elif m.text == "/start donate":
         await m.reply_text(
             text='🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi melalui link dan nomer dibawah ini. Berapapun nilainya saya sangat berterimakasih, jika ada kendala kamu bisa chat ke @YasirArisM. Thanks you.. \n\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N : Yasir Aris M)',
