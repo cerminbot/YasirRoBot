@@ -31,8 +31,8 @@ async def start(b, m):
     if usr_cmd == "/start":
         await m.reply_sticker("CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA")
         await m.reply_text(
-            text="""
-👋 Hai, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
+            text=f"""
+👋 Hai {m.from_user.mention}, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
 Kirimkan aku sebuah file atau video dan lihat keajaiban yang terjadi!
 Klik /help untuk melihat info lengkapnya.\n
 <b>🍃 Bot dibuat oleh :</b>@YasirArisM
@@ -75,8 +75,8 @@ Klik /help untuk melihat info lengkapnya.\n
         #if shortlinka:
             #online_link = shortlinka
 
-        msg_text ="""
-<u>Yeaaayyyy! 😁, Link kamu berhasil di generate! 🤓</u>
+        msg_text = f"""
+<u>Hai {m.from_user.mention}, Link kamu berhasil di generate! 🤓</u>
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
 <b>📥 Download Video :</b> <code>{}</code>
@@ -103,7 +103,7 @@ async def help_handler(bot, message):
             f"**#NEW_USER **\n\n[{message.from_user.first_name}](tg://user?id={message.from_user.id}) memulai bot kamu.."
         )   
     await message.reply_text(
-       text="Kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
+       text=f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
             parse_mode="HTML",
             
           reply_markup=InlineKeyboardMarkup(
