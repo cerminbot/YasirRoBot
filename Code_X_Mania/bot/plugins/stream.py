@@ -22,6 +22,7 @@ def get_shortlink(url):
        print(err)
        pass
    return shortlink
+
 @StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio) & ~filters.edited, group=4)
 async def private_receive_handler(c: Client, m: Message):
     if not await db.is_user_exist(m.from_user.id):
@@ -66,6 +67,7 @@ async def private_receive_handler(c: Client, m: Message):
 © @YasirRoBot"""
 
         await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
+        await m.reply_sticker("CAACAgQAAxkBAAI7J2GrSAfCamP20t2CROscRnfubFURAAIiBwACS2nuEHXVtKlrVqLRHgQ")
         await m.reply_text(
             text=msg_text.format(file_name, file_size),
             parse_mode="HTML", 
