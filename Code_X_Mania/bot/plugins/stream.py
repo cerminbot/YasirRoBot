@@ -59,7 +59,7 @@ async def private_receive_handler(c: Client, m: Message):
             file_name = f"{m.audio.file_name}"
 
         msg_text ="""
-<i><u>Yeayy! 😁, Link mu sudah digenerate! 🤓</u></i>
+<i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
 
@@ -69,7 +69,7 @@ async def private_receive_handler(c: Client, m: Message):
         await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
         await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
-            text=msg_text.format(file_name, file_size),
+            text=msg_text.format(m.from_user.mention, file_name, file_size),
             parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
