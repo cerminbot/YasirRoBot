@@ -26,7 +26,7 @@ async def root_route_handler(request):
                               "Bot Version":"3.0.1"})
 
 
-@routes.get("/tonton/{message_id}")
+@routes.get("/lihat/{message_id}")
 async def stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
