@@ -84,12 +84,13 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>🚸 Catatan :</b> Link tidak akan expired, kecuali saya yang hapus jika kamu menyalahgunakan bot ini.
 <i>© @YasirRoBot </i>"""
 
-        await m.reply_sticker("CAACAgQAAxkBAAI7J2GrSAfCamP20t2CROscRnfubFURAAIiBwACS2nuEHXVtKlrVqLRHgQ")
+        await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
             text=msg_text.format(file_name, file_size, online_link, stream_link),
             parse_mode="HTML",
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Stream Link", url=stream_link), #Stream Link
-                                                InlineKeyboardButton('📥 Download Link', url=online_link)]]) #Download Link
+                                                InlineKeyboardButton('📥 Download Link', url=online_link)], #Download Link
+                                               [InlineKeyboardButton('💰 Donate', url='https://telegra.ph/Donate-12-04-2')]])
         )
 
 
