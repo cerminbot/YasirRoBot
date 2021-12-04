@@ -29,6 +29,7 @@ async def start(b, m):
         )
     usr_cmd = m.text.split("_")[-1]
     if usr_cmd == "/start":
+        await m.reply_sticker("CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA")
         await m.reply_text(
             text="""
 👋 Hai, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
@@ -83,6 +84,7 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>🚸 Catatan :</b> Link tidak akan expired, kecuali saya yang hapus jika kamu menyalahgunakan bot ini.
 <i>© @YasirRoBot </i>"""
 
+        await m.reply_sticker("CAACAgQAAxkBAAI7J2GrSAfCamP20t2CROscRnfubFURAAIiBwACS2nuEHXVtKlrVqLRHgQ")
         await m.reply_text(
             text=msg_text.format(file_name, file_size, online_link, stream_link),
             parse_mode="HTML",
