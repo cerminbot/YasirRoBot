@@ -7,7 +7,7 @@ from Code_X_Mania.utils.database import Database
 from Code_X_Mania.utils.human_readable import humanbytes
 from Code_X_Mania.vars import Var
 from pyrogram import filters, Client
-from pyrogram.errors import FloodWait, UserNotParticipant
+from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
 from pyshorteners import Shortener
@@ -60,6 +60,7 @@ async def private_receive_handler(c: Client, m: Message):
 
         msg_text ="""
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
+
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
 
@@ -89,7 +90,10 @@ async def channel_receive_handler(bot, broadcast):
         await bot.leave_chat(broadcast.chat.id)
         return
     try:
-        log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
+        try:
+           log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
+        except Exception:
+           log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
         stream_link = Var.URL + 'lihat/' + str(log_msg.message_id) 
         online_link = Var.URL + 'unduh/' + str(log_msg.message_id)
         await log_msg.reply_text(
@@ -106,6 +110,8 @@ async def channel_receive_handler(bot, broadcast):
                 ]
             )
         )
+    except ChatAdminRequired:
+        await bot.leave_chat(broadcast.chat.id)
     except FloodWait as w:
         print(f"Sleeping for {str(w.x)}s")
         await asyncio.sleep(w.x)
