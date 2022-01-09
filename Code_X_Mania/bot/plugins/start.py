@@ -77,10 +77,12 @@ Klik /help untuk melihat info lengkapnya.\n
 
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
+
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
 <b>📥 Download Video :</b> <code>{}</code>
 <b>🖥 Tonton Video nya  :</b> <code>{}</code>
+
 <b>🚸 Catatan :</b> Link tidak akan expired, kecuali saya yang hapus jika kamu menyalahgunakan bot ini.
 <i>© @YasirRoBot </i>"""
 
