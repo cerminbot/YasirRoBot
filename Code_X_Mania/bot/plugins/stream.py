@@ -42,8 +42,8 @@ async def private_receive_handler(c: Client, m: Message):
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
         file_name = get_media_file_name(log_msg)
-        stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name}"
-        online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name}"
+        stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name}"
+        online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name}"
 
         file_size = None
         if m.video:
