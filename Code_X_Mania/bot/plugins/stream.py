@@ -23,6 +23,13 @@ def get_shortlink(url):
        pass
    return shortlink
 
+def get_media_file_name(m):
+    media = m.video or m.document or m.audio
+    if media and media.file_name:
+        return urllib.parse.quote_plus(media.file_name)
+    else:
+        return media.file_unique_id
+
 @StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio) & ~filters.edited, group=4)
 async def private_receive_handler(c: Client, m: Message):
     if not await db.is_user_exist(m.from_user.id):
@@ -33,15 +40,10 @@ async def private_receive_handler(c: Client, m: Message):
         )
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
-        stream_link = Var.URL + 'lihat/' + str(log_msg.message_id)
-        #shortlink = get_shortlink(stream_link) 
-        #if shortlink:
-            #stream_link = shortlink
-        online_link = Var.URL + 'unduh/'+ str(log_msg.message_id) 
-        #shortlinka = get_shortlink(online_link)
-        #if shortlinka:
-            #online_link = shortlinka
-        
+        file_name = get_media_file_name(log_msg)
+        stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name}"
+        online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name}"
+
         file_size = None
         if m.video:
             file_size = f"{humanbytes(m.video.file_size)}"
@@ -50,27 +52,21 @@ async def private_receive_handler(c: Client, m: Message):
         elif m.audio:
             file_size = f"{humanbytes(m.audio.file_size)}"
 
-        file_name = None
-        if m.video:
-            file_name = f"{m.video.file_name}"
-        elif m.document:
-            file_name = f"{m.document.file_name}"
-        elif m.audio:
-            file_name = f"{m.audio.file_name}"
-
         msg_text ="""
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
 
 <b>📂 Nama File :</b> <code>{}</code>
 <b>📦 Ukuran File :</b> <code>{}</code>
+<b>📥 Download Video :</b> <code>{}</code>
+<b>🖥 Tonton Video nya  :</b> <code>{}</code>
 
-<b>CATATAN : Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
+<b>CATATAN : Dilarang menggunakan bot ini untuk download Po**, Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
 © @YasirRoBot"""
 
         await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
         await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
-            text=msg_text.format(m.from_user.mention, file_name, file_size),
+            text=msg_text.format(m.from_user.mention, file_name, file_size, online_link, stream_link),
             parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
