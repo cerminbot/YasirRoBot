@@ -1,6 +1,7 @@
 # (c) Code-X-Mania
 
 import requests
+import urllib.parse
 import asyncio
 from Code_X_Mania.bot import StreamBot
 from Code_X_Mania.utils.database import Database
