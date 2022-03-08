@@ -27,9 +27,12 @@ async def root_route_handler(request):
 
 
 @routes.get("/lihat/{message_id}")
+@routes.get("/lihat/{message_id}/")
+@routes.get(r"/lihat/{message_id:\d+}/{name}"
 async def stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
+        logging.info(message_id)
         return web.Response(text=await render_page(message_id), content_type='text/html')
     except ValueError as e:
         logging.error(e)
@@ -37,9 +40,12 @@ async def stream_handler(request):
         
 @routes.get("/unduh/{message_id}")
 @routes.get("/{message_id}")
+@routes.get("/{message_id}/")
+@routes.get(r"/{message_id:\d+}/{name}")
 async def old_stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
+        logging.info(message_id)
         return await media_streamer(request, message_id)
     except ValueError as e:
         logging.error(e)
