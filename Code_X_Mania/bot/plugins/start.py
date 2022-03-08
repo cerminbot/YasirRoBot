@@ -1,5 +1,6 @@
 # (c) Code-X-Mania
 
+import urllib.parse
 from Code_X_Mania.bot import StreamBot
 from Code_X_Mania.vars import Var
 from Code_X_Mania.utils.human_readable import humanbytes
@@ -18,6 +19,13 @@ def get_shortlink(url):
        print(err)
        pass
    return shortlink
+
+def get_media_file_name(m):
+    media = m.video or m.document or m.audio
+    if media and media.file_name:
+        return urllib.parse.quote_plus(media.file_name)
+    else:
+        return media.file_unique_id
 
 @StreamBot.on_message(filters.command('start') & filters.private & ~filters.edited)
 async def start(b, m):
@@ -58,23 +66,10 @@ Klik /help untuk melihat info lengkapnya.\n
         elif get_msg.audio:
             file_size = f"{humanbytes(get_msg.audio.file_size)}"
 
-        file_name = None
-        if get_msg.video:
-            file_name = f"{get_msg.video.file_name}"
-        elif get_msg.document:
-            file_name = f"{get_msg.document.file_name}"
-        elif get_msg.audio:
-            file_name = f"{get_msg.audio.file_name}"
-
-        stream_link = Var.URL + 'lihat/' + str(get_msg.message_id)
-        #shortlink = get_shortlink(stream_link)
-        #if shortlink:
-            #stream_link = shortlink
-        online_link = Var.URL + 'unduh/' + str(get_msg.message_id)
-        #shortlinka = get_shortlink(online_link)
-        #if shortlinka:
-            #online_link = shortlinka
-
+        file_name = get_media_file_name(get_msg)
+        stream_link = Var.URL + 'lihat/' + str(get_msg.message_id) + file_name
+        online_link = Var.URL + 'unduh/' + str(get_msg.message_id) + file_name
+         
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
 
