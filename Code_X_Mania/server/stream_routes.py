@@ -40,7 +40,7 @@ async def stream_handler(request):
         
 @routes.get("/unduh/{message_id}")
 @routes.get("/unduh/{message_id}/")
-@routes.get(r"/unduh{message_id:\d+}/{name}")
+@routes.get(r"/unduh/{message_id:\d+}/{name}")
 async def old_stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
