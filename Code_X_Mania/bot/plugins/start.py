@@ -67,8 +67,8 @@ Klik /help untuk melihat info lengkapnya.\n
             file_size = f"{humanbytes(get_msg.audio.file_size)}"
 
         file_name = get_media_file_name(get_msg)
-        stream_link = Var.URL + 'lihat/' + str(get_msg.message_id) + file_name
-        online_link = Var.URL + 'unduh/' + str(get_msg.message_id) + file_name
+        stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name}"
+        online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name}"
          
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
