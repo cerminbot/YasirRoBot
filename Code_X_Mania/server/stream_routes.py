@@ -76,7 +76,7 @@ async def media_streamer(request, message_id: int):
                                       new_chunk_size)
 
     file_name = file_properties.file_name if file_properties.file_name \
-        else f"{secrets.token_hex(2)}.jpeg"
+        else f"{secrets.token_hex(2)}.mp4"
     mime_type = file_properties.mime_type if file_properties.mime_type \
         else f"{mimetypes.guess_type(file_name)}"
 
