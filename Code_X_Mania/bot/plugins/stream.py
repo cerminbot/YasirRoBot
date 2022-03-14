@@ -12,7 +12,7 @@ from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
 from pyshorteners import Shortener
-from Code_X_Mania.utils import get_hash, get_name
+from Code_X_Mania.utils.file_properties import get_hash, get_name
 
 
 def get_shortlink(url):
