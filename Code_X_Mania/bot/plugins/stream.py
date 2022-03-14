@@ -61,8 +61,8 @@ async def private_receive_handler(c: Client, m: Message):
         file_name_encode = get_media_file_name(log_msg)
         file_name = file_names(log_msg)
         file_size = get_size(log_msg)
-        stream_link = f"{Var.URL}lihat/{log_msg.message_id}/{quote_plus(get_name(m))}?hash={get_hash(log_msg)}"
-        online_link = f"{Var.URL}unduh/{log_msg.message_id}/{quote_plus(get_name(m))}?hash={get_hash(log_msg)}"
+        stream_link = f"{Var.URL}lihat/{log_msg.message_id}/{urllib.parse.quote_plus(get_name(m))}?hash={get_hash(log_msg)}"
+        online_link = f"{Var.URL}unduh/{log_msg.message_id}/{urllib.parse.quote_plus(get_name(m))}?hash={get_hash(log_msg)}"
         # stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name_encode}"
         # online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name_encode}"
 
