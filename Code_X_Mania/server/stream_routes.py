@@ -64,7 +64,7 @@ async def stream_handler(request: web.Request):
         else:
             message_id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
             secure_hash = request.rel_url.query.get("hash")
-        return await media_streamer(request, message_id, secure_hash)
+        return await media_streamer(request, message_id)
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message)
     except FIleNotFound as e:
@@ -76,16 +76,12 @@ async def stream_handler(request: web.Request):
         raise web.HTTPInternalServerError(text=str(e))
         
 
-async def media_streamer(request, message_id: int, secure_hash: str):
+async def media_streamer(request, message_id: int):
     range_header = request.headers.get('Range', 0)
     media_msg = await StreamBot.get_messages(Var.BIN_CHANNEL, message_id)
     file_properties = await TGCustomYield().generate_file_properties(media_msg)
     file_size = file_properties.file_size
     file_id = file_properties.file_unique_id
-
-    if file_id.unique_id[:6] != secure_hash:
-        logging.debug(f"Invalid hash for message with ID {message_id}")
-        raise InvalidHash
     
     if range_header:
         from_bytes, until_bytes = range_header.replace('bytes=', '').split('-')
