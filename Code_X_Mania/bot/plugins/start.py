@@ -26,6 +26,23 @@ def get_media_file_name(m):
         return urllib.parse.quote_plus(media.file_name)
     else:
         return media.file_unique_id
+      
+def file_name(m):
+    media = m.video or m.document or m.audio
+    if media and media.file_name:
+        return media.file_name
+    else:
+        return media.file_unique_id
+      
+def get_size(m):
+   file_size = None
+   if m.video:
+      file_size = f"{humanbytes(m.video.file_size)}"
+   elif m.document:
+      file_size = f"{humanbytes(m.document.file_size)}"
+   elif m.audio:
+      file_size = f"{humanbytes(m.audio.file_size)}"
+   return file_size
 
 @StreamBot.on_message(filters.command('start') & filters.private & ~filters.edited)
 async def start(b, m):
@@ -66,9 +83,11 @@ Klik /help untuk melihat info lengkapnya.\n
         elif get_msg.audio:
             file_size = f"{humanbytes(get_msg.audio.file_size)}"
 
-        file_name = get_media_file_name(get_msg)
-        stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name}"
-        online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name}"
+        file_name_encode = get_media_file_name(log_msg)
+        file_name = file_name(log_msg)
+        file_size = get_size(log_msg)
+        stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name_encode}"
+        online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name_encode}"
          
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
