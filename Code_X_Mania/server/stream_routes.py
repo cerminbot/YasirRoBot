@@ -9,6 +9,7 @@ from aiohttp import web
 from ..bot import StreamBot
 from Code_X_Mania import StartTime
 from ..utils.custom_dl import TGCustomYield, chunk_size, offset_fix
+from Code_X_Mania.server.exceptions import FIleNotFound, InvalidHash
 from Code_X_Mania.utils.render_template import render_page
 from ..utils.time_format import get_readable_time
 routes = web.RouteTableDef()
@@ -38,9 +39,9 @@ async def stream_handler(request):
         logging.error(e)
         raise web.HTTPNotFound
         
-@routes.get("/unduh/{message_id}")
-@routes.get("/unduh/{message_id}/")
-@routes.get(r"/unduh/{message_id:\d+}/{name}")
+# @routes.get("/unduh/{message_id}")
+# @routes.get("/unduh/{message_id}/")
+# @routes.get(r"/unduh/{message_id:\d+}/{name}")
 async def old_stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
@@ -50,13 +51,40 @@ async def old_stream_handler(request):
         logging.error(e)
         raise web.HTTPNotFound
         
+@routes.get(r"/unduh/{path:\S+}", allow_head=True)
+async def stream_handler(request):
+    try:
+        path = request.match_info["path"]
+        match = re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path)
+        if match:
+            secure_hash = match.group(1)
+            message_id = int(match.group(2))
+        else:
+            message_id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
+            secure_hash = request.rel_url.query.get("hash")
+        return await media_streamer(request, message_id, secure_hash)
+    except InvalidHash as e:
+        raise web.HTTPForbidden(text=e.message)
+    except FIleNotFound as e:
+        raise web.HTTPNotFound(text=e.message)
+    except (AttributeError, BadStatusLine, ConnectionResetError):
+        pass
+    except Exception as e:
+        logging.critical(e.with_traceback(None))
+        raise web.HTTPInternalServerError(text=str(e))
+        
 
-async def media_streamer(request, message_id: int):
+async def media_streamer(request, message_id: int, secure_hash: str):
     range_header = request.headers.get('Range', 0)
     media_msg = await StreamBot.get_messages(Var.BIN_CHANNEL, message_id)
     file_properties = await TGCustomYield().generate_file_properties(media_msg)
     file_size = file_properties.file_size
+    file_id = file_properties.file_unique_id
 
+    if file_id.unique_id[:6] != secure_hash:
+        logging.debug(f"Invalid hash for message with ID {message_id}")
+        raise InvalidHash
+    
     if range_header:
         from_bytes, until_bytes = range_header.replace('bytes=', '').split('-')
         from_bytes = int(from_bytes)
