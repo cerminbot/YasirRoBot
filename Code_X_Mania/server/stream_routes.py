@@ -6,6 +6,7 @@ import secrets
 import mimetypes
 from ..vars import Var
 from aiohttp import web
+from aiohttp.http_exceptions import BadStatusLine
 from ..bot import StreamBot
 from Code_X_Mania import StartTime
 from ..utils.custom_dl import TGCustomYield, chunk_size, offset_fix
