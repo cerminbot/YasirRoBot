@@ -30,6 +30,23 @@ def get_media_file_name(m):
         return urllib.parse.quote_plus(media.file_name)
     else:
         return media.file_unique_id
+      
+def file_name(m):
+    media = m.video or m.document or m.audio
+    if media and media.file_name:
+        return media.file_name
+    else:
+        return media.file_unique_id
+      
+def get_size(m):
+   file_size = None
+   if m.video:
+      file_size = f"{humanbytes(m.video.file_size)}"
+   elif m.document:
+      file_size = f"{humanbytes(m.document.file_size)}"
+   elif m.audio:
+      file_size = f"{humanbytes(m.audio.file_size)}"
+   return file_size
 
 @StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio) & ~filters.edited, group=4)
 async def private_receive_handler(c: Client, m: Message):
@@ -41,17 +58,11 @@ async def private_receive_handler(c: Client, m: Message):
         )
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
-        file_name = get_media_file_name(log_msg)
-        stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name}"
-        online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name}"
-
-        file_size = None
-        if m.video:
-            file_size = f"{humanbytes(m.video.file_size)}"
-        elif m.document:
-            file_size = f"{humanbytes(m.document.file_size)}"
-        elif m.audio:
-            file_size = f"{humanbytes(m.audio.file_size)}"
+        file_name_encode = get_media_file_name(log_msg)
+        file_name = file_name(log_msg)
+        file_size = get_size(log_msg)
+        stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name_encode}"
+        online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name_encode}"
 
         msg_text ="""
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
