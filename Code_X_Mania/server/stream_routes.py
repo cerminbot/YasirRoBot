@@ -41,17 +41,6 @@ async def stream_handler(request):
         logging.error(e)
         raise web.HTTPNotFound
         
-# @routes.get("/unduh/{message_id}")
-# @routes.get("/unduh/{message_id}/")
-# @routes.get(r"/unduh/{message_id:\d+}/{name}")
-async def old_stream_handler(request):
-    try:
-        message_id = int(request.match_info['message_id'])
-        logging.info(message_id)
-        return await media_streamer(request, message_id)
-    except ValueError as e:
-        logging.error(e)
-        raise web.HTTPNotFound
         
 @routes.get("/unduh/{message_id}")
 @routes.get("/unduh/{message_id}/")
@@ -59,7 +48,6 @@ async def old_stream_handler(request):
 async def stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
-        logging.info(f"{message_id}, {name}, {hashed}")
         return await media_streamer(request, message_id)
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message)
