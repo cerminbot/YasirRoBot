@@ -53,17 +53,13 @@ async def old_stream_handler(request):
         logging.error(e)
         raise web.HTTPNotFound
         
-@routes.get(r"/unduh/{path:\S+}", allow_head=True)
-async def stream_handler(request: web.Request):
+@routes.get("/unduh/{message_id}")
+@routes.get("/unduh/{message_id}/")
+@routes.get(r"/unduh/{message_id:\d+}/{name}?hash={hashed}")
+async def stream_handler(request):
     try:
-        path = request.match_info["path"]
-        match = re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path)
-        if match:
-            secure_hash = match.group(1)
-            message_id = int(match.group(2))
-        else:
-            message_id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
-            secure_hash = request.rel_url.query.get("hash")
+        message_id = int(request.match_info['message_id'])
+        logging.info(f"{message_id}, {name}, {hashed}")
         return await media_streamer(request, message_id)
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message)
