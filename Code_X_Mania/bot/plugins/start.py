@@ -27,7 +27,7 @@ def get_media_file_name(m):
     else:
         return media.file_unique_id
       
-def file_name(m):
+def file_names(m):
     media = m.video or m.document or m.audio
     if media and media.file_name:
         return media.file_name
@@ -84,7 +84,7 @@ Klik /help untuk melihat info lengkapnya.\n
             file_size = f"{humanbytes(get_msg.audio.file_size)}"
 
         file_name_encode = get_media_file_name(log_msg)
-        file_name = file_name(log_msg)
+        file_name = file_names(log_msg)
         file_size = get_size(log_msg)
         stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name_encode}"
         online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name_encode}"
