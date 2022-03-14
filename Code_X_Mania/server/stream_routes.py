@@ -44,7 +44,7 @@ async def stream_handler(request):
         
 @routes.get("/unduh/{message_id}")
 @routes.get("/unduh/{message_id}/")
-@routes.get(r"/unduh/{message_id:\d+}/{name}")
+@routes.get(r"/unduh/{message_id:\d+}/{name}?hash={hashed}")
 async def stream_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
@@ -64,9 +64,7 @@ async def media_streamer(request, message_id: int):
     range_header = request.headers.get('Range', 0)
     media_msg = await StreamBot.get_messages(Var.BIN_CHANNEL, message_id)
     file_properties = await TGCustomYield().generate_file_properties(media_msg)
-    logging.info(file_properties)
     file_size = file_properties.file_size
-    file_id = file_properties.file_unique_id
     
     if range_header:
         from_bytes, until_bytes = range_header.replace('bytes=', '').split('-')
