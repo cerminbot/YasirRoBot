@@ -54,7 +54,7 @@ async def old_stream_handler(request):
         raise web.HTTPNotFound
         
 @routes.get(r"/unduh/{path:\S+}", allow_head=True)
-async def stream_handler(request):
+async def stream_handler(request: web.Request):
     try:
         path = request.match_info["path"]
         match = re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path)
