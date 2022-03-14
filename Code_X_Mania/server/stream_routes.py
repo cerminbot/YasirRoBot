@@ -64,6 +64,7 @@ async def media_streamer(request, message_id: int):
     range_header = request.headers.get('Range', 0)
     media_msg = await StreamBot.get_messages(Var.BIN_CHANNEL, message_id)
     file_properties = await TGCustomYield().generate_file_properties(media_msg)
+    logging.info(file_properties)
     file_size = file_properties.file_size
     file_id = file_properties.file_unique_id
     
