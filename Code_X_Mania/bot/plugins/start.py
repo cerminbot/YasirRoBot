@@ -12,12 +12,11 @@ db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
 from pyshorteners import Shortener
 
 def get_shortlink(url):
-   shortlink = False 
+   shortlink = False
    try:
       shortlink = Shortener().tinyurl.short(url)
    except Exception as err:
-       print(err)
-       pass
+      print(err)
    return shortlink
 
 def get_media_file_name(m):
@@ -28,11 +27,8 @@ def get_media_file_name(m):
         return media.file_unique_id
       
 def file_names(m):
-    media = m.video or m.document or m.audio
-    if media and media.file_name:
-        return media.file_name
-    else:
-        return media.file_unique_id
+   media = m.video or m.document or m.audio
+   return media.file_name if media and media.file_name else media.file_unique_id
       
 def get_size(m):
    file_size = None

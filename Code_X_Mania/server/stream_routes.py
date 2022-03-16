@@ -65,7 +65,7 @@ async def media_streamer(request, message_id: int):
     media_msg = await StreamBot.get_messages(Var.BIN_CHANNEL, message_id)
     file_properties = await TGCustomYield().generate_file_properties(media_msg)
     file_size = file_properties.file_size
-    
+
     if range_header:
         from_bytes, until_bytes = range_header.replace('bytes=', '').split('-')
         from_bytes = int(from_bytes)
@@ -84,10 +84,8 @@ async def media_streamer(request, message_id: int):
     body = TGCustomYield().yield_file(media_msg, offset, first_part_cut, last_part_cut, part_count,
                                       new_chunk_size)
 
-    file_name = file_properties.file_name if file_properties.file_name \
-        else f"{secrets.token_hex(2)}.mp4"
-    mime_type = file_properties.mime_type if file_properties.mime_type \
-        else f"{mimetypes.guess_type(file_name)}"
+    file_name = file_properties.file_name or f"{secrets.token_hex(2)}.mp4"
+    mime_type = file_properties.mime_type or f"{mimetypes.guess_type(file_name)}"
 
     return_resp = web.Response(
         status=206 if range_header else 200,
