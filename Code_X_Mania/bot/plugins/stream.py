@@ -16,12 +16,11 @@ from Code_X_Mania.utils.file_properties import get_hash, get_name
 
 
 def get_shortlink(url):
-   shortlink = False 
+   shortlink = False
    try:
       shortlink = Shortener().dagd.short(url)
    except Exception as err:
-       print(err)
-       pass
+      print(err)
    return shortlink
 
 def get_media_file_name(m):
@@ -32,11 +31,8 @@ def get_media_file_name(m):
         return media.file_unique_id
       
 def file_names(m):
-    media = m.video or m.document or m.audio
-    if media and media.file_name:
-        return media.file_name
-    else:
-        return media.file_unique_id
+   media = m.video or m.document or m.audio
+   return media.file_name if media and media.file_name else media.file_unique_id
       
 def get_size(m):
    file_size = None
@@ -96,40 +92,40 @@ async def private_receive_handler(c: Client, m: Message):
 
 @StreamBot.on_message(filters.channel & (filters.document | filters.video) & ~filters.edited, group=-1)
 async def channel_receive_handler(bot, broadcast):
-    if broadcast.chat.id == -1001279146310:
-        return
-    elif int(broadcast.chat.id) in Var.BANNED_CHANNELS:
-        await bot.leave_chat(broadcast.chat.id)
-        return
-    try:
-        try:
-           log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
-        except Exception:
-           log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
-        stream_link = Var.URL + 'lihat/' + str(log_msg.message_id) 
-        online_link = Var.URL + 'unduh/' + str(log_msg.message_id)
-        await log_msg.reply_text(
-            text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
-            quote=True,
-            parse_mode="Markdown"
-        )
-        await bot.edit_message_reply_markup(
-            chat_id=broadcast.chat.id,
-            message_id=broadcast.message_id,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                   [InlineKeyboardButton('📥 Stream & Download Link', url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.message_id)}")]
-                ]
-            )
-        )
-    except ChatAdminRequired:
-        await bot.leave_chat(broadcast.chat.id)
-    except FloodWait as w:
-        print(f"Sleeping for {str(w.x)}s")
-        await asyncio.sleep(w.x)
-        await bot.send_message(chat_id=Var.BIN_CHANNEL,
-                             text=f"Mendapat floodwait {str(w.x)} detik dari {broadcast.chat.title}\n\n**ID Channel:** `{str(broadcast.chat.id)}`",
-                             disable_web_page_preview=True, parse_mode="Markdown")
-    except Exception as e:
-        await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True, parse_mode="Markdown")
-        print(f"Tidak bisa edit pesan broadcast!\ERROR:  **Beri aku ijin edit pesan di channel{e}**")
+   if broadcast.chat.id == -1001279146310:
+       return
+   elif int(broadcast.chat.id) in Var.BANNED_CHANNELS:
+       await bot.leave_chat(broadcast.chat.id)
+       return
+   try:
+      try:
+         log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
+      except Exception:
+         log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
+      stream_link = f'{Var.URL}lihat/{str(log_msg.message_id)}'
+      online_link = f'{Var.URL}unduh/{str(log_msg.message_id)}'
+      await log_msg.reply_text(
+          text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
+          quote=True,
+          parse_mode="Markdown"
+      )
+      await bot.edit_message_reply_markup(
+          chat_id=broadcast.chat.id,
+          message_id=broadcast.message_id,
+          reply_markup=InlineKeyboardMarkup(
+              [
+                 [InlineKeyboardButton('📥 Stream & Download Link', url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.message_id)}")]
+              ]
+          )
+      )
+   except ChatAdminRequired:
+       await bot.leave_chat(broadcast.chat.id)
+   except FloodWait as w:
+       print(f"Sleeping for {str(w.x)}s")
+       await asyncio.sleep(w.x)
+       await bot.send_message(chat_id=Var.BIN_CHANNEL,
+                            text=f"Mendapat floodwait {str(w.x)} detik dari {broadcast.chat.title}\n\n**ID Channel:** `{str(broadcast.chat.id)}`",
+                            disable_web_page_preview=True, parse_mode="Markdown")
+   except Exception as e:
+       await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True, parse_mode="Markdown")
+       print(f"Tidak bisa edit pesan broadcast!\ERROR:  **Beri aku ijin edit pesan di channel{e}**")

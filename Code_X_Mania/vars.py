@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
+
 class Var(object):
     API_ID = int(getenv('API_ID'))
     API_HASH = str(getenv('API_HASH'))
@@ -27,8 +29,12 @@ class Var(object):
     else:
         ON_HEROKU = False
     FQDN = str(getenv('FQDN', BIND_ADRESS)) if not ON_HEROKU or getenv('FQDN') else APP_NAME+'.herokuapp.com'
-    URL = "https://{}/".format(FQDN) if ON_HEROKU or NO_PORT else \
-        "http://{}:{}/".format(FQDN, PORT)
+    URL = f"https://{FQDN}/" if ON_HEROKU or NO_PORT else f"http://{FQDN}:{PORT}/"
     DATABASE_URL = str(getenv('DATABASE_URL'))
     UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', None))
-    BANNED_CHANNELS = list(set(int(x) for x in str(getenv("BANNED_CHANNELS", "-1001362659779")).split()))
+    BANNED_CHANNELS = list(
+        {
+            int(x)
+            for x in str(getenv("BANNED_CHANNELS", "-1001362659779")).split()
+        }
+    )

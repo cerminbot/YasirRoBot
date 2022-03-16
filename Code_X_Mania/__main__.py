@@ -39,12 +39,12 @@ async def start_services():
             patt = Path(a.name)
             plugin_name = patt.stem.replace(".py", "")
             plugins_dir = Path(f"Code_X_Mania/bot/plugins/{plugin_name}.py")
-            import_path = ".plugins.{}".format(plugin_name)
+            import_path = f".plugins.{plugin_name}"
             spec = importlib.util.spec_from_file_location(import_path, plugins_dir)
             load = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(load)
-            sys.modules["Code_X_Mania.bot.plugins." + plugin_name] = load
-            print("Imported => " + plugin_name)
+            sys.modules[f"Code_X_Mania.bot.plugins.{plugin_name}"] = load
+            print(f"Imported => {plugin_name}")
     if Var.ON_HEROKU:
         print('------------------ Starting Keep Alive Service ------------------')
         print('\n')
@@ -64,11 +64,14 @@ async def start_services():
     print('---------------------------------------------------------------------------------------------------------')
     print('\n')
     print('----------------------- Service Started -----------------------------------------------------------------')
-    print('                        bot =>> {}'.format((await StreamBot.get_me()).first_name))
-    print('                        server ip =>> {}:{}'.format(bind_address, Var.PORT))
-    print('                        Owner =>> {}'.format((Var.OWNER_USERNAME)))
+    print(
+        f'                        bot =>> {(await StreamBot.get_me()).first_name}'
+    )
+
+    print(f'                        server ip =>> {bind_address}:{Var.PORT}')
+    print(f'                        Owner =>> {Var.OWNER_USERNAME}')
     if Var.ON_HEROKU:
-        print('                        app runnng on =>> {}'.format(Var.FQDN))
+        print(f'                        app runnng on =>> {Var.FQDN}')
     print('---------------------------------------------------------------------------------------------------------')
     print('Give a star to my repo https://github.com/Code-X-Mania/filestreambot  also follow me for new bots')
     print('---------------------------------------------------------------------------------------------------------')
