@@ -6,7 +6,8 @@ import logging
 import secrets
 import mimetypes
 from ..vars import Var
-from aiohttp import web
+from bs4 import BeautifulSoup
+from aiohttp import web, ClientSession
 from aiohttp.http_exceptions import BadStatusLine
 from ..bot import StreamBot
 from Code_X_Mania import StartTime
@@ -18,6 +19,11 @@ routes = web.RouteTableDef()
 from urllib.parse import quote_plus
 kg18="ago"
 
+async def getcontent(url):  
+    async with ClientSession() as session:  
+        r = await session.get(url)  
+        return await r.read() 
+
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
     return web.json_response({"status": "Berjalan",
@@ -28,6 +34,47 @@ async def root_route_handler(request):
                               "telegram_bot": '@'+(await StreamBot.get_me()).username,
                               "Bot Version":"3.0.1"})
 
+@routes.get("/lk21/{judul}")
+async def lk21_api(request):
+       headers = {
+           'User-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582"
+       }
+
+       html = await getcontent(f"https://149.56.24.226/?s={judul}")
+       soup = BeautifulSoup(html, 'lxml')
+       data = []
+       for res in soup.find_all(class_='search-item'):
+          link = res.select('a')[0]['href']
+          judul = res.select('a')[1]['title']
+          try:
+             r1 = res.select('a')[2].text
+          except:
+             r1 = ''
+          try:
+             r2 = res.select('a')[3].text
+          except:
+             r2 = ''
+          try:
+             r3 = res.select('a')[4].text
+          except:
+             r3 = ''
+          try:
+             r4 = res.select('a')[5].text
+          except:
+             r4 = ''
+          try:
+             r5 = res.select('a')[6].text
+          except:
+             r5 = ''
+          ddl = link.split("/")[3]
+          dl = f"https://asdahsdkjajslkfbkaujsgfbjaeghfyjj76e8637e68723rhbfajkl.rodanesia.com/get/{ddl}"
+          data.append({
+              'judul': judul,
+              'link': link,
+              'kualitas': f'{r1} {r2} {r3} {r4} {r5}',
+              'dl': dl
+          })
+       return web.json_response(data)
 
 @routes.get("/lihat/{message_id}")
 @routes.get("/lihat/{message_id}/")
