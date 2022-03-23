@@ -7,5 +7,6 @@ motor
 aiofiles
 dnspython
 apscheduler
+lxml
 requests
 pyshorteners
