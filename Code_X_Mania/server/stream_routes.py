@@ -40,7 +40,7 @@ async def lk21_api(request):
            'User-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582"
        }
 
-       html = await getcontent(f"https://149.56.24.226/?s={judul}")
+       html = await getcontent(f"https://149.56.24.226/?s=soul")
        soup = BeautifulSoup(html, 'lxml')
        data = []
        for res in soup.find_all(class_='search-item'):
