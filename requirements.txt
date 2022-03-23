@@ -1,5 +1,6 @@
 pyrogram
 tgcrypto
+bs4
 aiohttp
 python-dotenv
 motor
