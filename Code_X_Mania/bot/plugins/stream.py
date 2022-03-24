@@ -1,4 +1,4 @@
-Oh# (c) Code-X-Mania
+# (c) Code-X-Mania
 
 import requests
 import urllib.parse
