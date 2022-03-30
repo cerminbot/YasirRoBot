@@ -15,6 +15,7 @@ class Var(object):
     SESSION_NAME = str(getenv('SESSION_NAME', 'YasirBot'))
     SLEEP_THRESHOLD = int(getenv('SLEEP_THRESHOLD', '60'))
     WORKERS = int(getenv('WORKERS', '8'))
+    BLACKLIST_USER = environ.get('BLACKLIST_USER','5233133778').split()
     BIN_CHANNEL = int(getenv('BIN_CHANNEL'))
     PORT = int(getenv('PORT', 8080))
     BIND_ADRESS = str(getenv('WEB_SERVER_BIND_ADDRESS', '0.0.0.0'))
