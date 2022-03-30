@@ -42,6 +42,8 @@ def get_size(m):
 
 @StreamBot.on_message(filters.command('start') & filters.private & ~filters.edited)
 async def start(b, m):
+    if m.from_user.id in Var.BANNED_USER:
+        return await m.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..")
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
         await b.send_message(
