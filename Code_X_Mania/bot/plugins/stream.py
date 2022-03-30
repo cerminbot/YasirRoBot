@@ -46,7 +46,7 @@ def get_size(m):
 
 @StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio) & ~filters.edited, group=4)
 async def private_receive_handler(c: Client, m: Message):
-    if m.from_user.id in Var.BANNED_USER:
+    if int(m.from_user.id) in Var.BANNED_USER:
         return await m.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..")
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
