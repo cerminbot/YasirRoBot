@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-
-
 class Var(object):
     API_ID = int(getenv('API_ID'))
     API_HASH = str(getenv('API_HASH'))
@@ -15,7 +13,6 @@ class Var(object):
     SESSION_NAME = str(getenv('SESSION_NAME', 'YasirBot'))
     SLEEP_THRESHOLD = int(getenv('SLEEP_THRESHOLD', '60'))
     WORKERS = int(getenv('WORKERS', '8'))
-    BANNED_USER = environ.get('BANNED_USER','5233133778').split()
     BIN_CHANNEL = int(getenv('BIN_CHANNEL'))
     PORT = int(getenv('PORT', 8080))
     BIND_ADRESS = str(getenv('WEB_SERVER_BIND_ADDRESS', '0.0.0.0'))
@@ -33,6 +30,12 @@ class Var(object):
     URL = f"https://{FQDN}/" if ON_HEROKU or NO_PORT else f"http://{FQDN}:{PORT}/"
     DATABASE_URL = str(getenv('DATABASE_URL'))
     UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', None))
+    BANNED_USER = list(
+        {
+            int(x)
+            for x in str(getenv("BANNED_USER", "5233133778")).split()
+        }
+    )
     BANNED_CHANNELS = list(
         {
             int(x)
