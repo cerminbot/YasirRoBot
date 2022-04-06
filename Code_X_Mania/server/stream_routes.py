@@ -46,7 +46,7 @@ async def google_api(request):
         'Chrome/61.0.3163.100 Safari/537.36'   
        }
        html = await getcontent(f'https://www.google.com/search?q={query}')
-       soup = BeautifulSoup(html.text, 'lxml')
+       soup = BeautifulSoup(html, 'lxml')
 
        # collect data
        data = []
