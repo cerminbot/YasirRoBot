@@ -19,8 +19,12 @@ routes = web.RouteTableDef()
 from urllib.parse import quote_plus
 kg18="ago"
 
-async def getcontent(url):  
-    async with ClientSession() as session:  
+async def getcontent(url):
+    headers = {   
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '   
+        'Chrome/61.0.3163.100 Safari/537.36'   
+    }
+    async with ClientSession(headers=headers) as session:  
         r = await session.get(url)  
         return await r.read() 
 
@@ -33,6 +37,35 @@ async def root_route_handler(request):
                               "ago":"",
                               "telegram_bot": '@'+(await StreamBot.get_me()).username,
                               "Bot Version":"3.0.1"})
+
+@routes.get("/google?query={query}")
+async def google_api(request):
+      query = request.match_info['query']
+      headers = {   
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '   
+        'Chrome/61.0.3163.100 Safari/537.36'   
+       }
+       html = await getcontent(f'https://www.google.com/search?q={query}')
+       soup = BeautifulSoup(html.text, 'lxml')
+
+       # collect data
+       data = []
+
+       for result in soup.select('.tF2Cxc'):
+          title = result.select_one('.DKV0Md').text
+          link = result.select_one('.yuRUbf a')['href']
+          try:
+            snippet = result.select_one('#rso .lyLwlc').text
+          except:
+            snippet = "-"
+
+          # appending data to an array
+          data.append({
+            'title': title,
+            'link': link,
+            'snippet': snippet,
+          })
+       return web.json_response(data)
 
 @routes.get("/lk21/{judul}")
 async def lk21_api(request):
