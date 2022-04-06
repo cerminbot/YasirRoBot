@@ -38,7 +38,7 @@ async def root_route_handler(request):
                               "telegram_bot": '@'+(await StreamBot.get_me()).username,
                               "Bot Version":"3.0.1"})
 
-@routes.get("/google?query={query}")
+@routes.get("/google/{query}")
 async def google_api(request):
        query = request.match_info['query']
        headers = {   
