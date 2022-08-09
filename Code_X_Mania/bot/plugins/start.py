@@ -40,7 +40,7 @@ def get_size(m):
       file_size = f"{humanbytes(m.audio.file_size)}"
    return file_size
 
-@StreamBot.on_message(filters.command('start') & filters.private & ~filters.edited)
+@StreamBot.on_message(filters.command('start') & filters.private)
 async def start(b, m):
     if int(m.from_user.id) in Var.BANNED_USER:
         return await m.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..")
@@ -107,7 +107,7 @@ Klik /help untuk melihat info lengkapnya.\n
         )
 
 
-@StreamBot.on_message(filters.command('help') & filters.private & ~filters.edited)
+@StreamBot.on_message(filters.command('help') & filters.private)
 async def help_handler(bot, message):
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id)
