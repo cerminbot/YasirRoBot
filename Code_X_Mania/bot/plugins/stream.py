@@ -75,7 +75,7 @@ async def private_receive_handler(c: Client, m: Message):
 <b>CATATAN : Dilarang menggunakan bot ini untuk download Po*n, Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
 © @YasirRoBot"""
 
-        await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
+        await log_msg.reply_text(text=f"**Di Minta Oleh :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**ID User :** `{m.from_user.id}`\n**Download Link :** {stream_link}", disable_web_page_preview=True, quote=True)
         await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
             text=msg_text.format(m.from_user.mention, file_name, file_size, online_link, stream_link),
