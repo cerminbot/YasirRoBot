@@ -61,7 +61,6 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>🍃 Bot dibuat oleh :</b>@YasirArisM
 <b><u>PERINGATAN 🚸</u></b>
 <b>Jangan Spam bot!!!.</b>""",
-            parse_mode="HTML",
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup( [ [InlineKeyboardButton('Owner', url=f"https://t.me/{Var.OWNER_USERNAME}"),
                                                                                        InlineKeyboardButton('YMovieZNew Channel', url='https://t.me/YMovieZNew') ] ]  ) )
