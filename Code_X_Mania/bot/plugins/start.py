@@ -101,7 +101,6 @@ Klik /help untuk melihat info lengkapnya.\n
         await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
             text=msg_text.format(m.from_user.mention, file_name, file_size, online_link, stream_link),
-            parse_mode="HTML",
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Stream Link", url=stream_link), #Stream Link
                                                 InlineKeyboardButton('📥 Download Link', url=online_link)], #Download Link
                                                [InlineKeyboardButton('💰 Donate', url='https://telegra.ph/Donate-12-04-2')]])
@@ -118,7 +117,6 @@ async def help_handler(bot, message):
         )   
     await message.reply_text(
        text=f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
-            parse_mode="HTML",
             
           reply_markup=InlineKeyboardMarkup(
             [
