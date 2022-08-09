@@ -44,7 +44,7 @@ def get_size(m):
       file_size = f"{humanbytes(m.audio.file_size)}"
    return file_size
 
-@StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio) & ~filters.edited, group=4)
+@StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio), group=4)
 async def private_receive_handler(c: Client, m: Message):
     if int(m.from_user.id) in Var.BANNED_USER:
         return await m.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..")
@@ -59,8 +59,8 @@ async def private_receive_handler(c: Client, m: Message):
         file_name_encode = get_media_file_name(log_msg)
         file_name = file_names(log_msg)
         file_size = get_size(log_msg)
-        stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name_encode}"
-        online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name_encode}"
+        stream_link = f"{Var.URL}lihat/{str(log_msg.id)}/{file_name_encode}"
+        online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{file_name_encode}"
         # stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name_encode}"
         # online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name_encode}"
 
@@ -79,7 +79,6 @@ async def private_receive_handler(c: Client, m: Message):
         await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
             text=msg_text.format(m.from_user.mention, file_name, file_size, online_link, stream_link),
-            parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Streaming Link", url=stream_link), #Stream Link
@@ -87,12 +86,12 @@ async def private_receive_handler(c: Client, m: Message):
                                               [InlineKeyboardButton('💰 Donate', url='https://telegra.ph/Donate-12-04-2')]])
         )
     except FloodWait as e:
-        print(f"Sleeping for {str(e.x)}s")
-        await asyncio.sleep(e.x)
+        print(f"Sleeping for {str(e.value)}s")
+        await asyncio.sleep(e.value)
         await c.send_message(chat_id=Var.BIN_CHANNEL, text=f"Dapat floodwait {str(e.x)}s dari [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`", disable_web_page_preview=True, parse_mode="Markdown")
 
 
-@StreamBot.on_message(filters.channel & (filters.document | filters.video) & ~filters.edited, group=-1)
+@StreamBot.on_message(filters.channel & (filters.document | filters.video), group=-1)
 async def channel_receive_handler(bot, broadcast):
    if broadcast.chat.id == -1001623503648:
        return
@@ -104,30 +103,29 @@ async def channel_receive_handler(bot, broadcast):
          log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
       except Exception:
          log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
-      stream_link = f'{Var.URL}lihat/{str(log_msg.message_id)}'
-      online_link = f'{Var.URL}unduh/{str(log_msg.message_id)}'
+      stream_link = f'{Var.URL}lihat/{str(log_msg.id)}'
+      online_link = f'{Var.URL}unduh/{str(log_msg.id)}'
       await log_msg.reply_text(
           text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
           quote=True,
-          parse_mode="Markdown"
       )
       await bot.edit_message_reply_markup(
           chat_id=broadcast.chat.id,
           message_id=broadcast.message_id,
           reply_markup=InlineKeyboardMarkup(
               [
-                 [InlineKeyboardButton('📥 Stream & Download Link', url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.message_id)}")]
+                 [InlineKeyboardButton('📥 Stream & Download Link', url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.id)}")]
               ]
           )
       )
    except ChatAdminRequired:
        await bot.leave_chat(broadcast.chat.id)
    except FloodWait as w:
-       print(f"Sleeping for {str(w.x)}s")
-       await asyncio.sleep(w.x)
+       print(f"Sleeping for {str(w.value)}s")
+       await asyncio.sleep(w.value)
        await bot.send_message(chat_id=Var.BIN_CHANNEL,
-                            text=f"Mendapat floodwait {str(w.x)} detik dari {broadcast.chat.title}\n\n**ID Channel:** `{str(broadcast.chat.id)}`",
-                            disable_web_page_preview=True, parse_mode="Markdown")
+                            text=f"Mendapat floodwait {str(w.value)} detik dari {broadcast.chat.title}\n\n**ID Channel:** `{str(broadcast.chat.id)}`",
+                            disable_web_page_preview=True)
    except Exception as e:
-       await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True, parse_mode="Markdown")
+       await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True)
        print(f"Tidak bisa edit pesan broadcast!\ERROR:  **Beri aku ijin edit pesan di channel{e}**")
