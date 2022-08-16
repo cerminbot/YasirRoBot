@@ -30,19 +30,19 @@ async def render_page(message_id):
         'video/x-matroska'
     ]
     if mime_type.lower() in video_formats:
-        async with aiofiles.open('Code_X_Mania/template/req.html') as r:
+        async with aiofiles.open('YasirRoBot/template/req.html') as r:
             heading = f'Watch {file_name}'
             tag = mime_type.split('/')[0].strip()
             html = (await r.read()).replace('tag',
                                             tag) % (heading, file_name, src)
     elif mime_type.lower() in audio_formats:
-        async with aiofiles.open('Code_X_Mania/template/req.html') as r:
+        async with aiofiles.open('YasirRoBot/template/req.html') as r:
             heading = f'Listen {file_name}'
             tag = mime_type.split('/')[0].strip()
             html = (await r.read()).replace('tag',
                                             tag) % (heading, file_name, src)
     else:
-        async with aiofiles.open('Code_X_Mania/template/dl.html') as r:
+        async with aiofiles.open('YasirRoBot/template/dl.html') as r:
             async with aiohttp.ClientSession() as s:
                 async with s.get(src) as u:
                     file_size = human_size(u.headers.get('Content-Type'))
