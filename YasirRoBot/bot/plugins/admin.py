@@ -26,7 +26,7 @@ async def sts(c: Client, m: Message):
 
 @StreamBot.on_message(
     filters.command("broadcast") & filters.private
-    & filters.user(list(Var.OWNER_ID)))
+    & filters.user(Var.OWNER_ID))
 async def broadcast_(c, m):
     user_id = m.from_user.id
     out = await m.reply_text(
