@@ -1,10 +1,10 @@
 # (c) Code-X-Mania
 
 import urllib.parse
-from Code_X_Mania.bot import StreamBot
-from Code_X_Mania.vars import Var
-from Code_X_Mania.utils.human_readable import humanbytes
-from Code_X_Mania.utils.database import Database
+from YasirRoBot.bot import StreamBot
+from YasirRoBot.vars import Var
+from YasirRoBot.utils.human_readable import humanbytes
+from YasirRoBot.utils.database import Database
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
@@ -12,12 +12,12 @@ db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
 from pyshorteners import Shortener
 
 def get_shortlink(url):
-   shortlink = False
-   try:
-      shortlink = Shortener().tinyurl.short(url)
-   except Exception as err:
-      print(err)
-   return shortlink
+    shortlink = False
+    try:
+        shortlink = Shortener().tinyurl.short(url)
+    except Exception as err:
+        print(err)
+    return shortlink
 
 def get_media_file_name(m):
     media = m.video or m.document or m.audio
@@ -25,20 +25,20 @@ def get_media_file_name(m):
         return urllib.parse.quote_plus(media.file_name)
     else:
         return media.file_unique_id
-      
+
 def file_names(m):
-   media = m.video or m.document or m.audio
-   return media.file_name if media and media.file_name else media.file_unique_id
-      
+    media = m.video or m.document or m.audio
+    return media.file_name if media and media.file_name else media.file_unique_id
+
 def get_size(m):
-   file_size = None
-   if m.video:
-      file_size = f"{humanbytes(m.video.file_size)}"
-   elif m.document:
-      file_size = f"{humanbytes(m.document.file_size)}"
-   elif m.audio:
-      file_size = f"{humanbytes(m.audio.file_size)}"
-   return file_size
+    file_size = None
+    if m.video:
+        file_size = f"{humanbytes(m.video.file_size)}"
+    elif m.document:
+        file_size = f"{humanbytes(m.document.file_size)}"
+    elif m.audio:
+        file_size = f"{humanbytes(m.audio.file_size)}"
+    return file_size
 
 @StreamBot.on_message(filters.command('start') & filters.private)
 async def start(b, m):
@@ -85,7 +85,7 @@ Klik /help untuk melihat info lengkapnya.\n
         file_size = get_size(get_msg)
         stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name_encode}"
         online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name_encode}"
-         
+
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
 
@@ -113,10 +113,10 @@ async def help_handler(bot, message):
         await bot.send_message(
             Var.BIN_CHANNEL,
             f"**#NEW_USER **\n\n[{message.from_user.first_name}](tg://user?id={message.from_user.id}) memulai bot kamu.."
-        )   
+        )
     await message.reply_text(
        text=f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
-            
+
           reply_markup=InlineKeyboardMarkup(
             [
                 [InlineKeyboardButton("🏵 Owner", url="https://t.me/YasirArisM")],

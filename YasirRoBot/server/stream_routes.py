@@ -10,23 +10,23 @@ from bs4 import BeautifulSoup
 from aiohttp import web, ClientSession
 from aiohttp.http_exceptions import BadStatusLine
 from ..bot import StreamBot
-from Code_X_Mania import StartTime
+from YasirRoBot import StartTime
 from ..utils.custom_dl import TGCustomYield, chunk_size, offset_fix
-from Code_X_Mania.server.exceptions import FIleNotFound, InvalidHash
-from Code_X_Mania.utils.render_template import render_page
+from YasirRoBot.server.exceptions import FIleNotFound, InvalidHash
+from YasirRoBot.utils.render_template import render_page
 from ..utils.time_format import get_readable_time
 routes = web.RouteTableDef()
 from urllib.parse import quote_plus
 kg18="ago"
 
 async def getcontent(url):
-    headers = {   
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '   
-        'Chrome/61.0.3163.100 Safari/537.36'   
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+        'Chrome/61.0.3163.100 Safari/537.36'
     }
-    async with ClientSession(headers=headers) as session:  
-        r = await session.get(url)  
-        return await r.read() 
+    async with ClientSession(headers=headers) as session:
+        r = await session.get(url)
+        return await r.read()
 
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
@@ -40,75 +40,75 @@ async def root_route_handler(request):
 
 @routes.get("/google/{query}")
 async def google_api(request):
-       query = request.match_info['query']
-       headers = {   
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '   
-        'Chrome/61.0.3163.100 Safari/537.36'   
-       }
-       html = await getcontent(f'https://www.google.com/search?q={query}')
-       soup = BeautifulSoup(html, 'lxml')
+    query = request.match_info['query']
+    headers = {
+     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+     'Chrome/61.0.3163.100 Safari/537.36'
+    }
+    html = await getcontent(f'https://www.google.com/search?q={query}')
+    soup = BeautifulSoup(html, 'lxml')
 
-       # collect data
-       data = []
+    # collect data
+    data = []
 
-       for result in soup.select('.tF2Cxc'):
-          title = result.select_one('.DKV0Md').text
-          link = result.select_one('.yuRUbf a')['href']
-          try:
+    for result in soup.select('.tF2Cxc'):
+        title = result.select_one('.DKV0Md').text
+        link = result.select_one('.yuRUbf a')['href']
+        try:
             snippet = result.select_one('#rso .lyLwlc').text
-          except:
+        except:
             snippet = "-"
 
-          # appending data to an array
-          data.append({
-            'title': title,
-            'link': link,
-            'snippet': snippet,
-          })
-       return web.json_response(data)
+        # appending data to an array
+        data.append({
+          'title': title,
+          'link': link,
+          'snippet': snippet,
+        })
+    return web.json_response(data)
 
 @routes.get("/lk21/{judul}")
 async def lk21_api(request):
-       title = request.match_info['judul']
-       headers = {
-           'User-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582"
-       }
+    title = request.match_info['judul']
+    headers = {
+        'User-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582"
+    }
 
-       html = await getcontent(f"https://149.56.24.226/?s={title}")
-       soup = BeautifulSoup(html, 'lxml')
-       data = []
-       for res in soup.find_all(class_='search-item'):
-          link = res.select('a')[0]['href']
-          judul = res.select('a')[1]['title']
-          try:
-             r1 = res.select('a')[2].text
-          except:
-             r1 = ''
-          try:
-             r2 = res.select('a')[3].text
-          except:
-             r2 = ''
-          try:
-             r3 = res.select('a')[4].text
-          except:
-             r3 = ''
-          try:
-             r4 = res.select('a')[5].text
-          except:
-             r4 = ''
-          try:
-             r5 = res.select('a')[6].text
-          except:
-             r5 = ''
-          ddl = link.split("/")[3]
-          dl = f"https://asdahsdkjajslkfbkaujsgfbjaeghfyjj76e8637e68723rhbfajkl.rodanesia.com/get/{ddl}"
-          data.append({
-              'judul': judul,
-              'link': link,
-              'kualitas': f'{r1} {r2} {r3} {r4} {r5}',
-              'dl': dl
-          })
-       return web.json_response(data)
+    html = await getcontent(f"https://149.56.24.226/?s={title}")
+    soup = BeautifulSoup(html, 'lxml')
+    data = []
+    for res in soup.find_all(class_='search-item'):
+        link = res.select('a')[0]['href']
+        judul = res.select('a')[1]['title']
+        try:
+            r1 = res.select('a')[2].text
+        except:
+            r1 = ''
+        try:
+            r2 = res.select('a')[3].text
+        except:
+            r2 = ''
+        try:
+            r3 = res.select('a')[4].text
+        except:
+            r3 = ''
+        try:
+            r4 = res.select('a')[5].text
+        except:
+            r4 = ''
+        try:
+            r5 = res.select('a')[6].text
+        except:
+            r5 = ''
+        ddl = link.split("/")[3]
+        dl = f"https://asdahsdkjajslkfbkaujsgfbjaeghfyjj76e8637e68723rhbfajkl.rodanesia.com/get/{ddl}"
+        data.append({
+            'judul': judul,
+            'link': link,
+            'kualitas': f'{r1} {r2} {r3} {r4} {r5}',
+            'dl': dl
+        })
+    return web.json_response(data)
 
 @routes.get("/lihat/{message_id}")
 @routes.get("/lihat/{message_id}/")
@@ -121,8 +121,8 @@ async def stream_handler(request):
     except ValueError as e:
         logging.error(e)
         raise web.HTTPNotFound
-        
-        
+
+
 @routes.get("/unduh/{message_id}")
 @routes.get("/unduh/{message_id}/")
 @routes.get(r"/unduh/{message_id:\d+}/{name}")
@@ -139,7 +139,7 @@ async def stream_handler(request):
     except Exception as e:
         logging.critical(e.with_traceback(None))
         raise web.HTTPInternalServerError(text=str(e))
-        
+
 
 async def media_streamer(request, message_id: int):
     range_header = request.headers.get('Range', 0)

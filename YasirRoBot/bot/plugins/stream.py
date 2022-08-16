@@ -3,25 +3,25 @@
 import requests
 import urllib.parse
 import asyncio
-from Code_X_Mania.bot import StreamBot
-from Code_X_Mania.utils.database import Database
-from Code_X_Mania.utils.human_readable import humanbytes
-from Code_X_Mania.vars import Var
+from YasirRoBot.bot import StreamBot
+from YasirRoBot.utils.database import Database
+from YasirRoBot.utils.human_readable import humanbytes
+from YasirRoBot.vars import Var
 from pyrogram import filters, Client
 from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
 from pyshorteners import Shortener
-from Code_X_Mania.utils.file_properties import get_hash, get_name
+from YasirRoBot.utils.file_properties import get_hash, get_name
 
 
 def get_shortlink(url):
-   shortlink = False
-   try:
-      shortlink = Shortener().dagd.short(url)
-   except Exception as err:
-      print(err)
-   return shortlink
+    shortlink = False
+    try:
+        shortlink = Shortener().dagd.short(url)
+    except Exception as err:
+        print(err)
+    return shortlink
 
 def get_media_file_name(m):
     media = m.video or m.document or m.audio
@@ -29,20 +29,20 @@ def get_media_file_name(m):
         return urllib.parse.quote_plus(media.file_name)
     else:
         return media.file_unique_id
-      
+
 def file_names(m):
-   media = m.video or m.document or m.audio
-   return media.file_name if media and media.file_name else media.file_unique_id
-      
+    media = m.video or m.document or m.audio
+    return media.file_name if media and media.file_name else media.file_unique_id
+
 def get_size(m):
-   file_size = None
-   if m.video:
-      file_size = f"{humanbytes(m.video.file_size)}"
-   elif m.document:
-      file_size = f"{humanbytes(m.document.file_size)}"
-   elif m.audio:
-      file_size = f"{humanbytes(m.audio.file_size)}"
-   return file_size
+    file_size = None
+    if m.video:
+        file_size = f"{humanbytes(m.video.file_size)}"
+    elif m.document:
+        file_size = f"{humanbytes(m.document.file_size)}"
+    elif m.audio:
+        file_size = f"{humanbytes(m.audio.file_size)}"
+    return file_size
 
 @StreamBot.on_message(filters.private & (filters.document | filters.video | filters.audio), group=4)
 async def private_receive_handler(c: Client, m: Message):
@@ -93,39 +93,39 @@ async def private_receive_handler(c: Client, m: Message):
 
 @StreamBot.on_message(filters.channel & (filters.document | filters.video), group=-1)
 async def channel_receive_handler(bot, broadcast):
-   if broadcast.chat.id == -1001623503648:
-       return
-   elif int(broadcast.chat.id) in Var.BANNED_CHANNELS:
-       await bot.leave_chat(broadcast.chat.id)
-       return
-   try:
-      try:
-         log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
-      except Exception:
-         log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
-      stream_link = f'{Var.URL}lihat/{str(log_msg.id)}'
-      online_link = f'{Var.URL}unduh/{str(log_msg.id)}'
-      await log_msg.reply_text(
-          text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
-          quote=True,
-      )
-      await bot.edit_message_reply_markup(
-          chat_id=broadcast.chat.id,
-          message_id=broadcast.message_id,
-          reply_markup=InlineKeyboardMarkup(
-              [
-                 [InlineKeyboardButton('📥 Stream & Download Link', url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.id)}")]
-              ]
-          )
-      )
-   except ChatAdminRequired:
-       await bot.leave_chat(broadcast.chat.id)
-   except FloodWait as w:
-       print(f"Sleeping for {str(w.value)}s")
-       await asyncio.sleep(w.value)
-       await bot.send_message(chat_id=Var.BIN_CHANNEL,
-                            text=f"Mendapat floodwait {str(w.value)} detik dari {broadcast.chat.title}\n\n**ID Channel:** `{str(broadcast.chat.id)}`",
-                            disable_web_page_preview=True)
-   except Exception as e:
-       await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True)
-       print(f"Tidak bisa edit pesan broadcast!\ERROR:  **Beri aku ijin edit pesan di channel{e}**")
+    if broadcast.chat.id == -1001623503648:
+        return
+    elif int(broadcast.chat.id) in Var.BANNED_CHANNELS:
+        await bot.leave_chat(broadcast.chat.id)
+        return
+    try:
+        try:
+            log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
+        except Exception:
+            log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
+        stream_link = f'{Var.URL}lihat/{str(log_msg.id)}'
+        online_link = f'{Var.URL}unduh/{str(log_msg.id)}'
+        await log_msg.reply_text(
+            text=f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
+            quote=True,
+        )
+        await bot.edit_message_reply_markup(
+            chat_id=broadcast.chat.id,
+            message_id=broadcast.message_id,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                   [InlineKeyboardButton('📥 Stream & Download Link', url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.id)}")]
+                ]
+            )
+        )
+    except ChatAdminRequired:
+        await bot.leave_chat(broadcast.chat.id)
+    except FloodWait as w:
+        print(f"Sleeping for {str(w.value)}s")
+        await asyncio.sleep(w.value)
+        await bot.send_message(chat_id=Var.BIN_CHANNEL,
+                             text=f"Mendapat floodwait {str(w.value)} detik dari {broadcast.chat.title}\n\n**ID Channel:** `{str(broadcast.chat.id)}`",
+                             disable_web_page_preview=True)
+    except Exception as e:
+        await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True)
+        print(f"Tidak bisa edit pesan broadcast!\ERROR:  **Beri aku ijin edit pesan di channel{e}**")
