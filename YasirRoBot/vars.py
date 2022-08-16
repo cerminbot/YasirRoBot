@@ -31,9 +31,10 @@ class Var(object):
     URL = f"https://{FQDN}/" if ON_HEROKU or NO_PORT else f"http://{FQDN}:{PORT}/"
     DATABASE_URL = str(getenv('DATABASE_URL'))
     UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', None))
-    BANNED_USER = list(
-        {int(x)
-         for x in str(getenv("BANNED_USER", "5233133778")).split()})
+    BANNED_USER = list({
+        int(x)
+        for x in str(getenv("BANNED_USER", "5233133778 5288302063")).split()
+    })
     BANNED_CHANNELS = list({
         int(x)
         for x in str(getenv("BANNED_CHANNELS", "-1001362659779")).split()
