@@ -18,7 +18,7 @@ async def ban_handler(bot, m):
         await db.add_ban_user(user)
         await m.reply(f"🚫 User {user} berhasil dibanned dari bot ini.")
     else:
-        await m.reply(f"🚫 User {user} sudah dibanned.")
+        await m.reply(f"🚫 User {user} sudah dibanned sebelumnya.")
 
 
 @StreamBot.on_message(
@@ -31,4 +31,4 @@ async def rm_ban_handler(bot, m):
         return
     user = m.command[1]
     await db.remove_ban(user)
-    await m.reply(f"🚫 User {user} berhasil dibanned dari bot ini.")
+    await m.reply(f"🚫 User {user} berhasil diunbanned dari bot ini.")

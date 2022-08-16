@@ -5,11 +5,14 @@ from YasirRoBot.bot import StreamBot
 from YasirRoBot.vars import Var
 from YasirRoBot.utils.human_readable import humanbytes
 from YasirRoBot.utils.database import Database
+from YasirRoBot.utils import cooldown_helper
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
+
 db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
 from pyshorteners import Shortener
+
 
 def get_shortlink(url):
     shortlink = False
@@ -19,6 +22,7 @@ def get_shortlink(url):
         print(err)
     return shortlink
 
+
 def get_media_file_name(m):
     media = m.video or m.document or m.audio
     if media and media.file_name:
@@ -26,9 +30,11 @@ def get_media_file_name(m):
     else:
         return media.file_unique_id
 
+
 def file_names(m):
     media = m.video or m.document or m.audio
     return media.file_name if media and media.file_name else media.file_unique_id
+
 
 def get_size(m):
     file_size = None
@@ -40,10 +46,14 @@ def get_size(m):
         file_size = f"{humanbytes(m.audio.file_size)}"
     return file_size
 
-@StreamBot.on_message(filters.command('start') & filters.private)
+
+@StreamBot.on_message(
+    filters.command('start') & filters.private & cooldown_helper.wait(15))
 async def start(b, m):
-    if int(m.from_user.id) in Var.BANNED_USER:
-        return await m.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..")
+    if await db.is_banned(int(m.from_user.id)):
+        return await m.reply(
+            "🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..\n\n🚫 Sorry, you have been banned from this bot because you have violated the user rules. Thank you.."
+        )
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
         await b.send_message(
@@ -52,7 +62,9 @@ async def start(b, m):
         )
     usr_cmd = m.text.split("_")[-1]
     if usr_cmd == "/start":
-        await m.reply_sticker("CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA")
+        await m.reply_sticker(
+            "CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA"
+        )
         await m.reply_text(
             text=f"""
 👋 Hai {m.from_user.mention}, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
@@ -62,15 +74,20 @@ Klik /help untuk melihat info lengkapnya.\n
 <b><u>PERINGATAN 🚸</u></b>
 <b>Jangan Spam bot!!!.</b>""",
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup( [ [InlineKeyboardButton('Owner', url=f"https://t.me/{Var.OWNER_USERNAME}"),
-                                                                                       InlineKeyboardButton('YMovieZNew Channel', url='https://t.me/YMovieZNew') ] ]  ) )
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton('Owner',
+                                     url=f"https://t.me/{Var.OWNER_USERNAME}"),
+                InlineKeyboardButton('YMovieZNew Channel',
+                                     url='https://t.me/YMovieZNew')
+            ]]))
     elif m.text == "/start donate":
         await m.reply_text(
-            text='🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi melalui link dan nomer dibawah ini. Berapapun nilainya saya sangat berterimakasih, jika ada kendala kamu bisa chat ke @YasirArisM. Thanks you.. \n\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N : Yasir Aris M)',
-            disable_web_page_preview=True
-        )
+            text=
+            '🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi melalui link dan nomer dibawah ini. Berapapun nilainya saya sangat berterimakasih, jika ada kendala kamu bisa chat ke @YasirArisM. Thanks you.. \n\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N : Yasir Aris M)',
+            disable_web_page_preview=True)
     else:
-        get_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
+        get_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL,
+                                       message_ids=int(usr_cmd))
 
         file_size = None
         if get_msg.video:
@@ -97,17 +114,32 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>🚸 Catatan :</b> Dilarang Menggunakan Bot ini Untuk Download Po*n, Link tidak akan expired kecuali selama bot ini tidak terbanned.</b>
 <i>© @YasirRoBot </i>"""
 
-        await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
-        await m.reply_text(
-            text=msg_text.format(m.from_user.mention, file_name, file_size, online_link, stream_link),
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Stream Link", url=stream_link), #Stream Link
-                                                InlineKeyboardButton('📥 Download Link', url=online_link)], #Download Link
-                                               [InlineKeyboardButton('💰 Donate', url='https://telegra.ph/Donate-12-04-2')]])
+        await m.reply_sticker(
+            "CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ"
         )
+        await m.reply_text(
+            text=msg_text.format(m.from_user.mention, file_name, file_size,
+                                 online_link, stream_link),
+            reply_markup=InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton("🖥 Stream Link",
+                                         url=stream_link),  #Stream Link
+                    InlineKeyboardButton('📥 Download Link', url=online_link)
+                ],  #Download Link
+                [
+                    InlineKeyboardButton(
+                        '💰 Donate', url='https://telegra.ph/Donate-12-04-2')
+                ]
+            ]))
 
 
-@StreamBot.on_message(filters.command('help') & filters.private)
+@StreamBot.on_message(
+    filters.command('help') & filters.private & cooldown_helper.wait(15))
 async def help_handler(bot, message):
+    if await db.is_banned(int(m.from_user.id)):
+        return await m.reply(
+            "🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..\n\n🚫 Sorry, you have been banned from this bot because you have violated the user rules. Thank you.."
+        )
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id)
         await bot.send_message(
@@ -115,12 +147,11 @@ async def help_handler(bot, message):
             f"**#NEW_USER **\n\n[{message.from_user.first_name}](tg://user?id={message.from_user.id}) memulai bot kamu.."
         )
     await message.reply_text(
-       text=f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
-
-          reply_markup=InlineKeyboardMarkup(
-            [
-                [InlineKeyboardButton("🏵 Owner", url="https://t.me/YasirArisM")],
-                [InlineKeyboardButton("🍺 Update Channel", url="https://t.me/YasirPediaChannel")]
-            ]
-        )
-    )
+        text=
+        f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("🏵 Owner", url="https://t.me/YasirArisM")],
+             [
+                 InlineKeyboardButton("🍺 Update Channel",
+                                      url="https://t.me/YasirPediaChannel")
+             ]]))

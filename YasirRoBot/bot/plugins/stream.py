@@ -6,6 +6,7 @@ import asyncio
 from YasirRoBot.bot import StreamBot
 from YasirRoBot.utils.database import Database
 from YasirRoBot.utils.human_readable import humanbytes
+from YasirRoBot.utils import cooldown_helper
 from YasirRoBot.vars import Var
 from pyrogram import filters, Client
 from pyrogram.errors import FloodWait, UserNotParticipant, ChatAdminRequired
@@ -51,12 +52,11 @@ def get_size(m):
 
 @StreamBot.on_message(filters.private &
                       (filters.document | filters.video | filters.audio),
-                      group=4)
+                      group=4 & cooldown_helper.wait(15))
 async def private_receive_handler(c: Client, m: Message):
-    if int(m.from_user.id) in Var.BANNED_USER or await db.is_banned(
-            int(m.from_user.id)):
+    if await db.is_banned(int(m.from_user.id)):
         return await m.reply(
-            "🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih.."
+            "🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..\n\n🚫 Sorry, you have been banned from this bot because you have violated the user rules. Thank you.."
         )
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
