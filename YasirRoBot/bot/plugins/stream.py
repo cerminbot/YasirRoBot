@@ -50,9 +50,9 @@ def get_size(m):
     return file_size
 
 
-@StreamBot.on_message(filters.private &
+@StreamBot.on_message(filters.private & cooldown_helper.wait(15) &
                       (filters.document | filters.video | filters.audio),
-                      group=4 & cooldown_helper.wait(15))
+                      group=4))
 async def private_receive_handler(c: Client, m: Message):
     if await db.is_banned(int(m.from_user.id)):
         return await m.reply(
