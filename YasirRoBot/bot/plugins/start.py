@@ -100,8 +100,8 @@ Klik /help untuk melihat info lengkapnya.\n
         file_name_encode = get_media_file_name(get_msg)
         file_name = file_names(get_msg)
         file_size = get_size(get_msg)
-        stream_link = f"{Var.URL}lihat/{str(get_msg.message_id)}/{file_name_encode}"
-        online_link = f"{Var.URL}unduh/{str(get_msg.message_id)}/{file_name_encode}"
+        stream_link = f"{Var.URL}lihat/{str(get_msg.id)}/{file_name_encode}"
+        online_link = f"{Var.URL}unduh/{str(get_msg.id)}/{file_name_encode}"
 
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
