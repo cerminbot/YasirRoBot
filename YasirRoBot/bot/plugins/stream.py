@@ -52,7 +52,7 @@ def get_size(m):
 
 @StreamBot.on_message(filters.private & cooldown_helper.wait(15) &
                       (filters.document | filters.video | filters.audio),
-                      group=4))
+                      group=4)
 async def private_receive_handler(c: Client, m: Message):
     if await db.is_banned(int(m.from_user.id)):
         return await m.reply(
@@ -115,7 +115,7 @@ async def private_receive_handler(c: Client, m: Message):
         await c.send_message(
             chat_id=Var.BIN_CHANNEL,
             text=
-            f"Dapat floodwait {str(e.x)}s dari [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`",
+            f"Dapat floodwait {str(e.value)}s dari [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`",
             disable_web_page_preview=True,
             parse_mode="Markdown")
 
