@@ -136,8 +136,8 @@ Klik /help untuk melihat info lengkapnya.\n
 @StreamBot.on_message(
     filters.command('help') & filters.private & cooldown_helper.wait(15))
 async def help_handler(bot, message):
-    if await db.is_banned(int(m.from_user.id)):
-        return await m.reply(
+    if await db.is_banned(int(message.from_user.id)):
+        return await message.reply(
             "🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..\n\n🚫 Sorry, you have been banned from this bot because you have violated the user rules. Thank you.."
         )
     if not await db.is_user_exist(message.from_user.id):
