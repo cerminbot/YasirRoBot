@@ -48,7 +48,7 @@ def get_size(m):
 
 
 @StreamBot.on_message(
-    filters.command('start') & filters.private & cooldown_helper.wait(15))
+    filters.command('start') & filters.private)
 async def start(b, m):
     if await db.is_banned(int(m.from_user.id)):
         return await m.reply(
