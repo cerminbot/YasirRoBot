@@ -134,7 +134,7 @@ Klik /help untuk melihat info lengkapnya.\n
 
 
 @StreamBot.on_message(
-    filters.command('help') & filters.private & cooldown_helper.wait(15))
+    filters.command('help') & filters.private)
 async def help_handler(bot, message):
     if await db.is_banned(int(message.from_user.id)):
         return await message.reply(
