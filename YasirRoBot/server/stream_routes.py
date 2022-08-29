@@ -30,13 +30,17 @@ async def getcontent(url):
 
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
-    return web.json_response({"status": "Berjalan",
-                              "maintained_by": "@YasirArisM",
-                              "uptime": get_readable_time(time.time() - StartTime),
-                              "Bot terakhir diupdate": get_readable_time(time.time()),
-                              "ago":"",
-                              "telegram_bot": '@'+(await StreamBot.get_me()).username,
-                              "Bot Version":"3.0.1"})
+    return web.json_response(
+        {
+            "status": "Berjalan",
+            "maintained_by": "@YasirArisM",
+            "uptime": get_readable_time(time.time() - StartTime),
+            "Bot terakhir diupdate": get_readable_time(time.time()),
+            "ago": "",
+            "telegram_bot": f'@{(await StreamBot.get_me()).username}',
+            "Bot Version": "3.0.1",
+        }
+    )
 
 @routes.get("/google/{query}")
 async def google_api(request):
