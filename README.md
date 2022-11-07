@@ -1,19 +1,19 @@
 <img title="repo views" src="https://viewz.up.railway.app/">
 
-![GitHub Repo stars](https://img.shields.io/github/stars/code-x-mania/filestreambot?color=blue&style=flat)
-![GitHub forks](https://img.shields.io/github/forks/code-x-mania/filestreambot?color=green&style=flat)</align>
-![GitHub contributors](https://img.shields.io/github/contributors/code-x-mania/filestreambot?style=flat)
-![GitHub repo size](https://img.shields.io/github/repo-size/code-x-mania/filestreambot?color=yellow)
+![GitHub Repo stars](https://img.shields.io/github/stars/yasirarism/YasirRoBot?color=blue&style=flat)
+![GitHub forks](https://img.shields.io/github/forks/yasirarism/YasirRoBot?color=green&style=flat)</align>
+![GitHub contributors](https://img.shields.io/github/contributors/yasirarism/YasirRoBot?style=flat)
+![GitHub repo size](https://img.shields.io/github/repo-size/yasirarism/YasirRoBot?color=yellow)
 [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-blue.svg)](https://t.me/filetoliprobot)
 [![Telegram -Bot](https://img.shields.io/badge/Telegram-Bot-purple.svg)](https://t.me/filetoliprorobot)
-![GitHub](https://img.shields.io/github/license/code-x-mania/filestreambot)
+![GitHub](https://img.shields.io/github/license/yasirarism/YasirRoBot)
 [![Bot Support](https://img.shields.io/badge/File%20Stream%20Bot-support%20group-blue)](https://t.me/codexmaniachat)
 [![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-blue.svg)](https://t.me/codexmania)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/code-x-mania/filestreambot)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/yasirarism/YasirRoBot)
 
-<h1 align="center">FileStreamBot</h1>
+<h1 align="center">YasirRoBot</h1>
 <p align="center">
-  <img src="https://socialify.git.ci/Code-X-Mania/filestreambot/image?description=1&descriptionEditable=A%20very%20fast%20file%20streaming%20bot%20used%20for%20streaming%20and%20downloading%20movies&font=Source%20Code%20Pro&forks=1&issues=1&language=1&logo=https%3A%2F%2Fuser-images.githubusercontent.com%2F88939380%2F137127129-a86fc939-2931-4c66-b6f6-b57711a9eab7.png&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark" alt="Cover Image" width="650">
+  <img src="https://socialify.git.ci/YasirArisM/YasirRoBot/image?description=1&descriptionEditable=A%20very%20fast%20file%20streaming%20bot%20used%20for%20streaming%20and%20downloading%20movies&font=Source%20Code%20Pro&forks=1&issues=1&language=1&logo=https%3A%2F%2Fuser-images.githubusercontent.com%2F88939380%2F137127129-a86fc939-2931-4c66-b6f6-b57711a9eab7.png&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark" alt="Cover Image" width="650">
   
 
   
