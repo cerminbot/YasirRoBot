@@ -80,7 +80,7 @@ Klik /help untuk melihat info lengkapnya.\n
                 InlineKeyboardButton('YasirPediaChannel',
                                      url='https://t.me/YasirPediaChannel')
             ]]))
-    elif m.text == "/start donate":
+    elif m.text == "/start donasi":
         await m.reply_photo(
             "https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", caption="🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..")
     else:
@@ -126,7 +126,7 @@ Klik /help untuk melihat info lengkapnya.\n
                 ],  #Download Link
                 [
                     InlineKeyboardButton(
-                        '💰 Donate', url=f"https://t.me/{(await b.get_me()).username}?start=donate")
+                        '💰 Donasi ke Owner', url=f"https://t.me/{(await b.get_me()).username}?start=donasi")
                 ]
             ]))
 
