@@ -104,7 +104,7 @@ async def private_receive_handler(c: Client, m: Message):
                 ],  #Download Link
                 [
                     InlineKeyboardButton(
-                        '💰 Donate', url=f"https://t.me/{(await bot.get_me()).username}?start=donate")
+                        '💰 Donate', url=f"https://t.me/{(await c.get_me()).username}?start=donate")
                 ]
             ]))
     except FloodWait as e:
@@ -138,12 +138,13 @@ async def channel_receive_handler(bot, broadcast):
             f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
             quote=True,
         )
+        ubotname = (await bot.get_me()).username
         button = []
         if message.chat.id == -1001686184174:
-            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.id)}")])
-            button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{(await bot.get_me()).username}?start=donate")])
+            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
+            button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{ubotname}?start=donate")])
         else:
-            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://telegram.me/share/url?url={url}")])
+            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
         await bot.edit_message_reply_markup(
             chat_id=broadcast.chat.id,
             message_id=broadcast.id,
