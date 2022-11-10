@@ -50,7 +50,7 @@ def get_size(m):
     return file_size
 
 
-@StreamBot.on_message(filters.private & cooldown_helper.wait(15) &
+@StreamBot.on_message(filters.private &
                       (filters.document | filters.video | filters.audio),
                       group=4)
 async def private_receive_handler(c: Client, m: Message):
