@@ -77,13 +77,12 @@ Klik /help untuk melihat info lengkapnya.\n
             reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton('Owner',
                                      url=f"https://t.me/{Var.OWNER_USERNAME}"),
-                InlineKeyboardButton('YMovieZNew Channel',
-                                     url='https://t.me/YMovieZNew')
+                InlineKeyboardButton('YasirPediaChannel',
+                                     url='https://t.me/YasirPediaChannel')
             ]]))
     elif m.text == "/start donate":
-        await m.reply_text(
-            text=
-            '🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi melalui link dan nomer dibawah ini. Berapapun nilainya saya sangat berterimakasih, jika ada kendala kamu bisa chat ke @YasirArisM. Thanks you.. \n\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N : Yasir Aris M)',
+        await m.reply_photo(
+            "https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", "🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..',
             disable_web_page_preview=True)
     else:
         get_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL,
@@ -128,7 +127,7 @@ Klik /help untuk melihat info lengkapnya.\n
                 ],  #Download Link
                 [
                     InlineKeyboardButton(
-                        '💰 Donate', url='https://telegra.ph/Donate-12-04-2')
+                        '💰 Donate', url=f"https://t.me/{(await b.get_me()).username}?start=donate")
                 ]
             ]))
 
@@ -148,7 +147,7 @@ async def help_handler(bot, message):
         )
     await message.reply_text(
         text=
-        f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>Saweria :</b> https://saweria.co/yasirarism\n~ <b>Dana :</b> 088220143804 (A.N Yasir Aris)",
+        f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>QRIS</b>: https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png\n~ <b>Bank Jago>/b>: 109641845083\n~ <b>Dana</b>: https://link.dana.id/qr/3kqod34",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("🏵 Owner", url="https://t.me/YasirArisM")],
              [
