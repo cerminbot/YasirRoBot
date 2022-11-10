@@ -71,8 +71,6 @@ async def private_receive_handler(c: Client, m: Message):
         file_size = get_size(log_msg)
         stream_link = f"{Var.URL}lihat/{str(log_msg.id)}/{file_name_encode}"
         online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{file_name_encode}"
-        # stream_link = f"{Var.URL}lihat/{str(log_msg.message_id)}/{file_name_encode}"
-        # online_link = f"{Var.URL}unduh/{str(log_msg.message_id)}/{file_name_encode}"
 
         msg_text = """
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
@@ -106,7 +104,7 @@ async def private_receive_handler(c: Client, m: Message):
                 ],  #Download Link
                 [
                     InlineKeyboardButton(
-                        '💰 Donate', url='https://telegra.ph/Donate-12-04-2')
+                        '💰 Donate', url=f"https://t.me/{(await bot.get_me()).username}?start=donate")
                 ]
             ]))
     except FloodWait as e:
@@ -140,16 +138,16 @@ async def channel_receive_handler(bot, broadcast):
             f"**Nama Channel:** `{broadcast.chat.title}`\n**ID Channel:** `{broadcast.chat.id}`\n**URL Request:** {stream_link}",
             quote=True,
         )
+        button = []
+        if message.chat.id == -1001686184174:
+            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.id)}")])
+            button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{(await bot.get_me()).username}?start=donate")])
+        else:
+            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://telegram.me/share/url?url={url}")])
         await bot.edit_message_reply_markup(
             chat_id=broadcast.chat.id,
             message_id=broadcast.id,
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton(
-                    '📥 Stream & Download Link',
-                    url=
-                    f"https://t.me/{(await bot.get_me()).username}?start=YasirBot_{str(log_msg.id)}"
-                )
-            ]]))
+            reply_markup=InlineKeyboardMarkup(button)
     except ChatAdminRequired:
         await bot.leave_chat(broadcast.chat.id)
     except FloodWait as w:
