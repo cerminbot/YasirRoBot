@@ -82,8 +82,7 @@ Klik /help untuk melihat info lengkapnya.\n
             ]]))
     elif m.text == "/start donate":
         await m.reply_photo(
-            "https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", "🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..",
-            disable_web_page_preview=True)
+            "https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", "🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..")
     else:
         get_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL,
                                        message_ids=int(usr_cmd))
