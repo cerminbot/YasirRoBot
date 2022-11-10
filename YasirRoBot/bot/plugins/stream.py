@@ -104,7 +104,7 @@ async def private_receive_handler(c: Client, m: Message):
                 ],  #Download Link
                 [
                     InlineKeyboardButton(
-                        '💰 Donate', url=f"https://t.me/{(await c.get_me()).username}?start=donate")
+                        '💰 Donasi', url=f"https://t.me/{(await c.get_me()).username}?start=donasi")
                 ]
             ]))
     except FloodWait as e:
@@ -142,7 +142,7 @@ async def channel_receive_handler(bot, broadcast):
         button = []
         if message.chat.id == -1001686184174:
             button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
-            button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{ubotname}?start=donate")])
+            button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{ubotname}?start=donasi")])
         else:
             button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
         await bot.edit_message_reply_markup(
