@@ -149,6 +149,7 @@ async def channel_receive_handler(bot, broadcast):
             chat_id=broadcast.chat.id,
             message_id=broadcast.id,
             reply_markup=InlineKeyboardMarkup(button)
+        )
     except ChatAdminRequired:
         await bot.leave_chat(broadcast.chat.id)
     except FloodWait as w:
