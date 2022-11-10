@@ -140,7 +140,7 @@ async def channel_receive_handler(bot, broadcast):
         )
         ubotname = (await bot.get_me()).username
         button = []
-        if message.chat.id == -1001686184174:
+        if broadcast.chat.id == -1001686184174:
             button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
             button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{ubotname}?start=donasi")])
         else:
