@@ -146,7 +146,8 @@ async def help_handler(bot, message):
         )
     await message.reply_text(
         text=
-        f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>QRIS</b>: https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png\n~ <b>Bank Jago>/b>: 109641845083\n~ <b>Dana</b>: https://link.dana.id/qr/3kqod34",
+        f"{message.from_user.mention} kirimkan aku sebuah file dan aku akan mengubah nya menjadi direct link dan stream link!\nJika kamu suka dengan bot ini, kamu bisa donasi ke owner melalui:\n~ <b>QRIS</b>: https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png\n~ <b>Bank Jago</b>: 109641845083\n~ <b>Dana</b>: https://link.dana.id/qr/3kqod34",
+        disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("🏵 Owner", url="https://t.me/YasirArisM")],
              [
