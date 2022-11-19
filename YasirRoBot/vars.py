@@ -3,10 +3,7 @@
 from os import getenv, environ
 from dotenv import load_dotenv
 
-load_dotenv()
-
-
-
+load_dotenv("config.env", override=True)
 
 class Var(object):
     API_ID = int(getenv('API_ID'))
