@@ -45,14 +45,6 @@ async def start_services():
             spec.loader.exec_module(load)
             sys.modules[f"YasirRoBot.bot.plugins.{plugin_name}"] = load
             print(f"Imported => {plugin_name}")
-    if Var.ON_HEROKU:
-        print(
-            '------------------ Starting Keep Alive Service ------------------'
-        )
-        print('\n')
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(ping_server, "interval", seconds=1200)
-        scheduler.start()
     print(
         '-------------------- Initalizing Web Server -------------------------'
     )
